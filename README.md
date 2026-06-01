@@ -1,33 +1,50 @@
 # HA-Hermes
 
-HA-Hermes is a Kubernetes-native autonomous operations layer built around a distributed set of cooperative agents called the Hermes Collective.
+HA-Hermes is a distributed cognitive operator for Kubernetes and surrounding infrastructure.
 
-## Core Idea
+It operates on top of Kubernetes as an operational and cognitive layer.
 
-The system enables a cluster to self-operate, self-heal, and self-evolve through a hierarchy of agent roles inspired by Hermes-like coordination and boundary-crossing behavior.
+## Core Model
 
-## Core Roles
+Linux plus Hermes CLI:
 
-- **Warden**: Node-level agent with privileged execution and local cognition.
-- **Steward**: Namespace / application-level operator responsible for workloads and services.
-- **Emissary**: External system agent for non-Kubernetes environments (VMs, bare metal, SSH hosts).
+- Linux provides runtime and execution primitives
+- Hermes provides cognition and operational assistance
 
-## Leadership Model
+Kubernetes plus HA-Hermes follows the same model:
 
-Leadership is not a separate static role. It is a **state** assumed by one Warden at a time through Kubernetes-native leader election.
+- Kubernetes is the distributed substrate
+- HA-Hermes is the distributed cognitive operator
 
-This role state is called:
+## Roles
 
-- **Regent (elected Warden state)**
+### Warden
+- node resident Hermes peer
+- privileged execution
+- Kubernetes awareness
+- leadership participation
+
+### Regent
+- temporary Warden leadership state
+- Lease elected
+- coordinates Hermes collective
+
+### Steward
+- application and namespace cognition
+- observability and operational assistance
+
+### Emissary
+- external Linux or VM Hermes peer
+- extends cognition beyond cluster
 
 ## Principles
 
-- Kubernetes is the primary HA substrate.
-- Git stores declarative intent.
-- Cluster state is operational truth.
-- Hermes shared memory stores cognitive state.
-- All human operations are mediated through Hermes.
+- Kubernetes remains authoritative for reconciliation
+- HA-Hermes augments rather than replaces operators
+- Git stores declarative intent
+- etcd stores runtime truth
+- Hermes stores cognitive memory and tasks
 
 ## Vision
 
-A self-maintaining infrastructure where agents collaboratively operate both infrastructure and applications with minimal human intervention.
+A cognitive operational layer for infrastructure and applications.
