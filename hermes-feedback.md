@@ -30,10 +30,11 @@ Extending Hermes beyond Kubernetes via SSH-accessible agents is pragmatic. It ac
 
 ## What I Dislike / Concerns
 
-**1. Regent model is contradictory.**
-The regent.md file says "Regent is a separate role from Warden" and "It is not a Warden leadership state." But warden.md says "A Warden may temporarily become Regent" and calls Regent a "leadership state." These two files directly contradict each other. This needs resolution — is Regent a separate singleton deployment or an elected state of a Warden? Both have very different operational implications:
-- If Regent is a separate Deployment/StatefulSet: you need HA, failover, persistence — completely different design.
-- If Regent is a Warden leadership state: it's simpler but you lose the security boundary that regent.md emphasizes ("Wardens do not automatically inherit Regent authority").
+**1. ~~Regent model is contradictory.~~ RESOLVED.**
+Initially, regent.md said Regent was a "separate role" while warden.md said "A Warden may temporarily become Regent" via Lease election — a direct contradiction. This has been resolved across two commits:
+- `regent.md` updated to: "Regent is not derived from runtime election or emergence" and "Regent is a predefined native role instance"
+- `warden.md` updated to: "Regent is a separate native role. Wardens do not become Regent. Wardens do not participate in election or promotion into Regent."
+Both files are now consistent. Regent is a separate native role, not an elected Warden state.
 
 **2. Shared memory / cognitive state storage is undefined.**
 The cognition model is conceptually solid but the persistence layer is TBD ("Possible approaches include: RWX storage, object storage, database-backed cognition"). This is the hardest problem in the whole system — distributed cognitive state across agents — and it's left as an exercise. Without this, the cognitive artifacts (Session, Memory, Skill, Intent) are just documentation, not implementation. I'd建议 stubbing at least a CRD or schema for these early.
@@ -82,10 +83,10 @@ The architectural thinking is solid. The big ideas are right:
 - Clear role separation with defined scopes
 - Store intent, truth, and cognition in separate places
 
-The main gap is that the docs read like an **early design document** (which they are) but they're missing the **concrete implementation bridges** that turn concepts into a working system. The next phase should pick 2-3 of the biggest gaps — I'd recommend: (1) resolve the Regent model contradiction, (2) define the cognitive state persistence layer, and (3) specify the inter-agent communication mechanism.
+The main gap is that the docs read like an **early design document** (which they are) but they're missing the **concrete implementation bridges** that turn concepts into a working system. The next phase should pick 2-3 of the biggest gaps — I'd recommend: (1) define the cognitive state persistence layer, (2) specify the inter-agent communication mechanism, and (3) stub CRD schemas for cognitive artifacts.
 
 The declared-agents.md file that was just removed was presumably for custom user-defined agent types? I'd suggest either replacing it with something more specific or ensuring the role-model.md covers extensibility.
 
 ---
 
-*This feedback is based on reading all files in the repository as of the latest pull (commit d2f9b65).*
+*This feedback is based on reading all files in the repository as of the latest pull (commit d3c3d08). Regent contradiction was resolved in commits 4834e11 and d3c3d08.*
