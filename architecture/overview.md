@@ -1,58 +1,55 @@
 # HA-Hermes Architecture Overview
 
-HA-Hermes is a Kubernetes-native autonomous operations layer that turns a cluster into a self-operating system maintained by cooperative agents.
+HA-Hermes is a distributed cognitive operator running on top of Kubernetes and surrounding infrastructure.
 
-## Core Vision
+Kubernetes remains the distributed execution and reconciliation substrate.
 
-A Kubernetes cluster that can:
+HA-Hermes adds cognition, memory, diagnosis, and operational coordination.
 
-- operate itself
-- heal itself
-- maintain applications
-- manage infrastructure
-- evolve through structured agent cognition
+## Core Model
 
-All through a coordinated set of Hermes agents.
+Linux plus Hermes CLI:
+
+- Linux provides runtime and execution primitives
+- Hermes provides cognition and operational assistance
+
+Kubernetes plus HA-Hermes follows the same model:
+
+- Kubernetes is the distributed substrate
+- HA-Hermes is the distributed cognitive operator
 
 ## System Planes
 
-### 1. Control Plane (Hermes Core)
-- Warden agents on every Kubernetes node
-- leader election via Kubernetes Lease
-- cluster-wide coordination state
+### 1. Hermes Control Plane
+- Wardens on Kubernetes nodes
+- leader election via Lease
+- Regent coordination state
 
 ### 2. Application Plane
-- Steward agents per namespace or service domain
-- manage workloads, deployments, observability
-- handle application-level incidents
+- Stewards per namespace or service domain
+- application cognition
+- observability and incident reasoning
 
 ### 3. External Infrastructure Plane
-- Emissaries on VMs, bare metal, SSH-accessible systems
-- extend Hermes beyond Kubernetes
+- Emissaries on Linux and external systems
+- extends Hermes beyond Kubernetes
 
-## Core Principles
+## Principles
 
-- Kubernetes is the HA substrate
-- Git is the declarative source of intent
-- etcd is runtime truth
-- Hermes shared memory is cognitive state
-- all operations are mediated through Hermes agents
+- Kubernetes reconciliation remains authoritative
+- Existing operators and controllers remain enabled
+- HA-Hermes coordinates rather than replaces
+- Git stores declarative intent
+- etcd stores runtime truth
+- Hermes stores cognitive state
 
-## Cognitive Model
+## Leadership
 
-Each agent type contributes to a distributed cognition system:
+Leadership is a state:
 
-- Wardens: node and control-plane awareness
-- Stewards: application and namespace awareness
-- Emissaries: external system awareness
-
-## Leadership Model
-
-Leadership is not a fixed role. It is a **state**:
-
-- A Warden becomes **Regent** via leader election
-- Regent coordinates cluster-wide decisions
+- one Warden becomes Regent
+- Regent coordinates Hermes collective behavior
 
 ## Goal
 
-Replace manual infrastructure operations with a cooperative, self-maintaining system of agents operating on Kubernetes-native primitives.
+Provide a distributed cognitive and operational layer that helps maintain infrastructure and applications through reasoning and coordination.
