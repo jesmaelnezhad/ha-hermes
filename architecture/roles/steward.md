@@ -2,49 +2,43 @@
 
 ## Overview
 
-A Steward is a Kubernetes namespace or application-level Hermes agent responsible for maintaining workloads, services, and application behavior.
+A Steward is a namespace or application-scoped Hermes peer responsible for application cognition and operational assistance.
 
-Stewards represent the application plane of HA-Hermes.
-
-## Responsibilities
-
-### Application Management
-- manage deployments and services
-- handle rollouts and upgrades
-- ensure service health
-- coordinate scaling decisions
-
-### Observability
-- analyze logs and metrics
-- detect anomalies in applications
-- correlate service-level incidents
-
-### Incident Response
-- diagnose application failures
-- coordinate fixes with Wardens and Emissaries
-- maintain service stability
-
-### Domain Cognition
-- maintain application-specific memory
-- track service topology
-- store operational knowledge per namespace
+Stewards help understand and coordinate application operations.
 
 ## Scope
 
-Stewards operate at:
-
-- Kubernetes namespace level
+- namespace level
 - service domain level
-- cluster-shared services when needed
+- shared services when needed
 
-## Interaction Model
+## Responsibilities
 
-Stewards:
+### Application Awareness
+- observe workloads and services
+- inspect logs and metrics
+- understand topology and dependencies
 
-- request execution from Wardens for node-level actions
-- delegate external tasks to Emissaries
-- receive coordination from Regent
+### Incident Analysis
+- diagnose failures
+- correlate incidents
+- coordinate remediation
+
+### Memory
+- maintain application knowledge
+- record incidents and operational context
+
+### Coordination
+- coordinate with Wardens
+- coordinate with Emissaries
+- receive Regent coordination
+
+## Constraints
+
+- Stewards do not replace Kubernetes operators
+- Stewards do not own reconciliation authority
+- Kubernetes remains authoritative for runtime convergence
 
 ## Summary
 
-Stewards are the application intelligence layer of HA-Hermes, responsible for ensuring that services remain healthy, observable, and continuously operable.
+Stewards are application-scoped cognitive peers for operational understanding and coordination.
