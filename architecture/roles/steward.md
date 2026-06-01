@@ -2,15 +2,23 @@
 
 ## Overview
 
-A Steward is a namespace or application-scoped Hermes peer responsible for application cognition and operational assistance.
+A Steward is a declared Hermes role responsible for application cognition and operational assistance.
 
-Stewards help understand and coordinate application operations.
+Stewards are intentionally created after bootstrap.
 
-## Scope
+They help understand and coordinate application operations.
 
-- namespace level
-- service domain level
-- shared services when needed
+## Declaration
+
+Stewards are user-declared and scoped.
+
+Typical scope:
+
+- namespace
+- service domain
+- shared application boundary
+
+Responsibility emerges from declared scope.
 
 ## Responsibilities
 
@@ -24,14 +32,15 @@ Stewards help understand and coordinate application operations.
 - correlate incidents
 - coordinate remediation
 
-### Memory
+### Memory and Context
 - maintain application knowledge
-- record incidents and operational context
+- record operational context
+- contribute cognitive state
 
 ### Coordination
 - coordinate with Wardens
 - coordinate with Emissaries
-- receive Regent coordination
+- participate in Regent coordination
 
 ## Constraints
 
@@ -41,4 +50,4 @@ Stewards help understand and coordinate application operations.
 
 ## Summary
 
-Stewards are application-scoped cognitive peers for operational understanding and coordination.
+Stewards are declared application-scoped cognitive operators.
