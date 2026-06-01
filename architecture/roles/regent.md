@@ -6,12 +6,13 @@ Regent is a native HA-Hermes role responsible for collective coordination, arbit
 
 Regent is a separate role from Warden.
 
-It is not a Warden leadership state.
+Regent is not derived from runtime election or emergence.
+
+Regent is a predefined native role instance.
 
 ## Deployment
 
-- singleton cluster role
-- likely Deployment or StatefulSet
+- singleton role deployment (implementation detail)
 - HA-aware
 - cluster scoped
 
