@@ -2,52 +2,56 @@
 
 ## Overview
 
-A Warden is a Kubernetes-node-resident Hermes agent responsible for node-level control, cluster participation, and privileged execution.
+A Warden is a Kubernetes-node-resident Hermes peer responsible for privileged execution, node awareness, and participation in the Hermes collective.
 
-Wardens form the control plane of HA-Hermes.
+Wardens do not replace Kubernetes control loops.
+
+They operate as cognitive and operational assistants with node-local authority.
+
+## Deployment
+
+- Kubernetes DaemonSet
+- one Warden per node
+- participates in Lease-based leadership election
 
 ## Responsibilities
 
-### Node-Level Authority
-- manage host state
-- perform system repair
-- handle disk, network, and runtime issues
-- execute privileged operations
+### Node Authority
+- host inspection
+- system repair
+- disk and network troubleshooting
+- privileged execution
 
 ### Kubernetes Awareness
-- watch pods and nodes
+- watch cluster resources
 - read logs and events
-- debug workloads
-- interact with Kubernetes API server
+- inspect workload behavior
+- interact with Kubernetes API
 
-### Hermes Cognition
-- participate in shared memory
-- maintain local reasoning state
-- execute assigned tasks from Regent or Stewards
+### Cognitive Participation
+- participate in Hermes shared memory
+- maintain local reasoning context
+- execute delegated work
+- contribute cluster observations
 
-## Leader Role (Regent State)
+## Regent State
 
-A Warden may temporarily become Regent via Kubernetes leader election.
+A Warden may temporarily become Regent.
 
-When in Regent state:
+Regent is:
 
-- coordinates all Wardens
-- resolves conflicts
-- assigns cluster-wide tasks
-- maintains global operational consistency
+- leadership state
+- not a separate role
+- elected via Kubernetes Lease
 
-## Failure Modes
+## Important Constraints
 
-- node failure triggers failover to another Warden
-- loss of leadership triggers automatic re-election
+Wardens:
 
-## Execution Model
-
-Wardens operate with two layers:
-
-- Cognitive layer (Hermes reasoning)
-- Execution layer (privileged system control)
+- do not replace Kubernetes controllers
+- do not own reconciliation authority
+- augment cluster operations through reasoning and coordination
 
 ## Summary
 
-Wardens are the foundational autonomous operators of the cluster, responsible for both infrastructure health and participation in cluster-wide intelligence.
+Wardens are privileged, node-local Hermes peers that provide execution and operational cognition inside Kubernetes.
