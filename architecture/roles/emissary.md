@@ -2,41 +2,33 @@
 
 ## Overview
 
-An Emissary is a Hermes agent deployed outside the Kubernetes control plane, operating on virtual machines, bare metal systems, or SSH-accessible Linux environments.
+An Emissary is a Hermes peer operating outside Kubernetes on Linux, VM, or SSH-accessible systems.
 
-Emissaries extend HA-Hermes beyond Kubernetes.
+Emissaries extend Hermes cognition and execution beyond the cluster.
 
 ## Responsibilities
 
-### External System Management
-- manage non-Kubernetes servers
-- execute remote system operations via SSH or local runtime
-- perform diagnostics and recovery on external machines
+### External Awareness
+- inspect external systems
+- collect operational state
+- analyze logs and services
 
-### Execution Capabilities
-- run system commands
-- manage services (systemd)
-- inspect logs and system state
-- apply patches or configuration changes
+### Execution
+- execute system commands
+- manage services
+- perform diagnostics and recovery
 
-### Reporting
-- report system state back to Wardens and Stewards
-- participate in incident resolution flows
+### Coordination
+- synchronize findings with Hermes collective
+- assist Wardens and Stewards
+- participate in operational workflows
 
 ## Constraints
 
 - Emissaries do not participate in leader election
-- Emissaries are not part of control plane quorum
+- Emissaries are not part of Kubernetes control plane
 - Emissaries cannot become Regent
-
-## Interaction Model
-
-Emissaries:
-
-- receive tasks from Stewards or Regent
-- execute operations on external infrastructure
-- synchronize state back into cluster cognition
 
 ## Summary
 
-Emissaries are the boundary-extension layer of HA-Hermes, enabling control and observability of infrastructure beyond Kubernetes.
+Emissaries are external Hermes peers that extend cognitive and operational reach beyond Kubernetes.
