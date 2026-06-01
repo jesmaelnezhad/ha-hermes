@@ -21,13 +21,21 @@ HA-Hermes provides:
 ### Overview
 - overview.md
 
-### Roles
+### Role Model
+- roles/role-model.md
 - roles/warden.md
+- roles/regent.md
 - roles/steward.md
 - roles/emissary.md
 
-### Leadership
-- leadership/regent.md
+### Cognition
+- cognition/README.md
+- cognition/observation.md
+- cognition/session.md
+- cognition/task.md
+- cognition/memory.md
+- cognition/skill.md
+- cognition/intent.md
 
 ### State
 - state/cognition.md
