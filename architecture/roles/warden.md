@@ -12,7 +12,6 @@ They operate as cognitive and operational assistants with node-local authority.
 
 - Kubernetes DaemonSet
 - one Warden per node
-- participates in Lease-based leadership election
 
 ## Responsibilities
 
@@ -34,15 +33,15 @@ They operate as cognitive and operational assistants with node-local authority.
 - execute delegated work
 - contribute cluster observations
 
-## Regent State
+## Relationship with Regent
 
-A Warden may temporarily become Regent.
+Regent is a separate native role.
 
-Regent is:
+Wardens do not become Regent.
 
-- leadership state
-- not a separate role
-- elected via Kubernetes Lease
+Wardens do not participate in election or promotion into Regent.
+
+Wardens coordinate with Regent when needed.
 
 ## Important Constraints
 
