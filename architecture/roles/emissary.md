@@ -2,9 +2,22 @@
 
 ## Overview
 
-An Emissary is a Hermes peer operating outside Kubernetes on Linux, VM, or SSH-accessible systems.
+An Emissary is a declared Hermes role operating outside Kubernetes on Linux, VM, or SSH-accessible systems.
 
 Emissaries extend Hermes cognition and execution beyond the cluster.
+
+## Declaration
+
+Emissaries are intentionally declared after bootstrap.
+
+Typical scope:
+
+- VM
+- bare metal host
+- SSH-accessible Linux environment
+- external infrastructure system
+
+Responsibility emerges from declared scope.
 
 ## Responsibilities
 
@@ -25,10 +38,10 @@ Emissaries extend Hermes cognition and execution beyond the cluster.
 
 ## Constraints
 
-- Emissaries do not participate in leader election
 - Emissaries are not part of Kubernetes control plane
-- Emissaries cannot become Regent
+- Emissaries do not replace reconciliation systems
+- Emissaries do not become Regent
 
 ## Summary
 
-Emissaries are external Hermes peers that extend cognitive and operational reach beyond Kubernetes.
+Emissaries are declared external cognitive operators that extend Hermes beyond Kubernetes.
