@@ -18,24 +18,31 @@ Kubernetes plus HA-Hermes follows the same model:
 
 ## Roles
 
-### Warden
+### Native Roles
+
+#### Warden
 - node resident Hermes peer
 - privileged execution
 - Kubernetes awareness
-- leadership participation
+- node-local substrate cognition
 
-### Regent
-- temporary Warden leadership state
-- Lease elected
-- coordinates Hermes collective
+#### Regent
+- separate native authority role
+- secure orchestration
+- coordination and arbitration
+- bootstrap and expansion authority
 
-### Steward
-- application and namespace cognition
+### Declared Roles
+
+#### Steward
+- user-declared cognitive operator
+- namespace or application cognition
 - observability and operational assistance
 
-### Emissary
-- external Linux or VM Hermes peer
-- extends cognition beyond cluster
+#### Emissary
+- user-declared external peer
+- Linux or VM cognition and execution
+- extends Hermes beyond Kubernetes
 
 ## Principles
 
@@ -43,8 +50,8 @@ Kubernetes plus HA-Hermes follows the same model:
 - HA-Hermes augments rather than replaces operators
 - Git stores declarative intent
 - etcd stores runtime truth
-- Hermes stores cognitive memory and tasks
+- Hermes stores cognitive state and memory
 
 ## Vision
 
-A cognitive operational layer for infrastructure and applications.
+A distributed cognitive and operational layer for infrastructure and applications.
