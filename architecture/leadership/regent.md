@@ -2,23 +2,46 @@
 
 ## Overview
 
-Regent is a temporary leadership state held by one Warden through Kubernetes leader election.
+Regent is a native HA-Hermes role responsible for collective coordination, arbitration, and secure orchestration.
 
-It is not a separate agent type.
+Regent is a separate role from Warden.
+
+It is not a Warden leadership state.
+
+## Deployment
+
+- singleton cluster role
+- likely Deployment or StatefulSet
+- HA-aware
+- cluster scoped
 
 ## Responsibilities
 
+### Collective Coordination
 - coordinate Wardens
-- assign cluster-wide tasks
-- resolve conflicts
-- maintain global view of cluster state
+- coordinate Stewards
+- maintain collective state awareness
+- orchestrate cross-domain work
 
-## Lifecycle
+### Arbitration
+- resolve operational disagreements
+- coordinate competing priorities
+- arbitrate cross-scope decisions
 
-- elected via Kubernetes Lease
-- only one Regent exists at a time
-- replaced automatically on failure
+### Secure Orchestration
+- bootstrap infrastructure
+- coordinate node addition
+- manage secure orchestration workflows
+- access or retrieve protected credentials when authorized
+
+## Security Boundary
+
+Regent exists partly to maintain a distinct trust boundary.
+
+Wardens do not automatically inherit Regent authority.
+
+Sensitive cluster-wide authority remains isolated.
 
 ## Summary
 
-Regent is the active leadership state of the Warden collective.
+Regent is the secure coordination and orchestration authority of the HA-Hermes collective.
