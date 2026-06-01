@@ -1,12 +1,18 @@
-# Warden Role
+# Warden — Node Cognitive Executor
 
 ## Overview
 
-A Warden is a Kubernetes-node-resident Hermes peer responsible for privileged execution, node awareness, and participation in the Hermes collective.
+Warden is a Kubernetes node–resident cognitive executor with privileged execution authority.
 
-Wardens do not replace Kubernetes control loops.
+Wardens operate as cognitive and operational assistants with node-local scope.
 
-They operate as cognitive and operational assistants with node-local authority.
+Wardens do NOT replace Kubernetes control loops.
+
+### Constraints
+
+- does not become Regent
+- no election or promotion semantics
+- operates within node scope
 
 ## Deployment
 
@@ -20,18 +26,29 @@ They operate as cognitive and operational assistants with node-local authority.
 - system repair
 - disk and network troubleshooting
 - privileged execution
+- node health and recovery
 
 ### Kubernetes Awareness
 - watch cluster resources
 - read logs and events
 - inspect workload behavior
 - interact with Kubernetes API
+- workload and node observation
 
-### Cognitive Participation
+### Cognitive Execution
+- execute delegated tasks from Regent
+- execute delegated tasks from Stewards
 - participate in Hermes shared memory
 - maintain local reasoning context
-- execute delegated work
 - contribute cluster observations
+
+### Observation Perception
+
+Wardens independently compute their own perception policy using:
+- role-native knowledge (DevOps/Kubernetes heuristics)
+- declaration data (CRDs, role specs, scope boundaries)
+- Observable hints (signal sources, thresholds, sampling guidance)
+- cognition memory (learned relevance, signal decay, reinforcement)
 
 ## Relationship with Regent
 
@@ -41,16 +58,8 @@ Wardens do not become Regent.
 
 Wardens do not participate in election or promotion into Regent.
 
-Wardens coordinate with Regent when needed.
-
-## Important Constraints
-
-Wardens:
-
-- do not replace Kubernetes controllers
-- do not own reconciliation authority
-- augment cluster operations through reasoning and coordination
+Wardens coordinate with Regent when needed and execute delegated work.
 
 ## Summary
 
-Wardens are privileged, node-local Hermes peers that provide execution and operational cognition inside Kubernetes.
+Wardens are privileged, node-local cognitive executors that provide execution and operational cognition inside Kubernetes.

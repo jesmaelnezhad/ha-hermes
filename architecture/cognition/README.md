@@ -2,30 +2,60 @@
 
 ## Overview
 
-HA-Hermes is a distributed cognitive operator.
+HA-Hermes is a distributed cognitive operator with **adaptive perception**.
 
 This directory defines the information model used by the Hermes collective.
 
 The model is defined before implementation schemas or CRDs.
 
+## System Identity
+
+HA-Hermes is a distributed cognitive system with adaptive perception, **not** a static observability pipeline.
+
 ## Cognitive Flow
 
-Observation
-→ Session
-→ Task
-→ Execution
-→ Memory
+```
+Perception Policy (adaptive)
+    ↓
+Observation (selected signals)
+    ↓
+Session (active reasoning)
+    ↓
+Task (execution unit)
+    ↓
+Execution (delegated)
+    ↓
+Memory (durable knowledge)
+    ↓
+[feeds back into Perception Policy]
+```
 
-Intent and Skill influence reasoning and execution.
+Intent and Skill influence reasoning and execution at every stage.
 
-## Candidate Cognitive Artifacts
+## Signal Hierarchy
 
-- Observation
-- Session
-- Task
-- Memory
-- Skill
-- Intent
+### Raw Infrastructure Layer (external systems)
+- logs, metrics, traces, Kubernetes events
+
+Hermes does NOT store all raw signals.
+
+### Cognitive Observation Layer
+Only meaningful signals become Observations.
+
+Observations are NOT raw logs — they are **selected, context-relevant signals** filtered by each agent's perception policy.
+
+### Cognitive Layer
+- Sessions, Tasks, Intent, Memory updates
+
+## Cognitive Artifacts
+
+- Perception — adaptive attention mechanism (NEW)
+- Observation — selected, context-relevant signals
+- Session — bounded active reasoning
+- Task — executable work unit
+- Memory — durable cognition
+- Skill — reusable operational capability
+- Intent — desired operational expectations
 
 These are conceptual artifacts and are not automatically Kubernetes resources.
 

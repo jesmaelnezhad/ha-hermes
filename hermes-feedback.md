@@ -89,4 +89,4 @@ The declared-agents.md file that was just removed was presumably for custom user
 
 ---
 
-*This feedback is based on reading all files in the repository as of the latest pull (commit d3c3d08). Regent contradiction was resolved in commits 4834e11 and d3c3d08.*
+> This feedback is based on reading all files in the repository as of commit e10848b. Regent contradiction was resolved in commits 4834e11 and d3c3d08. Perception system and role semantics evolved via new-decisions-to-be-applied.md (now deleted, fully integrated).

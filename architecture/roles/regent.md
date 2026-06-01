@@ -1,14 +1,17 @@
-# Regent
+# Regent — Cluster Cognitive Authority
 
 ## Overview
 
-Regent is a native HA-Hermes role responsible for collective coordination, arbitration, and secure orchestration.
+Regent is a **native singleton role** responsible for cluster-wide cognition and orchestration.
 
-Regent is a separate role from Warden.
+Regent is the brain and orchestration authority — execution is delegated, not directly performed.
 
-Regent is not derived from runtime election or emergence.
+### Critical Constraints
 
-Regent is a predefined native role instance.
+- NOT emergent
+- NOT elected
+- NOT derived from Warden state
+- NOT a runtime role transition
 
 ## Deployment
 
@@ -18,7 +21,11 @@ Regent is a predefined native role instance.
 
 ## Responsibilities
 
-### Collective Coordination
+### Cluster Lifecycle Management
+- node add / remove / recovery
+- cluster lifecycle orchestration
+
+### Cross-Agent Coordination
 - coordinate Wardens
 - coordinate Stewards
 - maintain collective state awareness
@@ -29,11 +36,23 @@ Regent is a predefined native role instance.
 - coordinate competing priorities
 - arbitrate cross-scope decisions
 
+### Cluster Reporting
+- cluster-wide reporting
+- administrative CLI interface for operators
+
 ### Secure Orchestration
 - bootstrap infrastructure
-- coordinate node addition
 - manage secure orchestration workflows
 - access or retrieve protected credentials when authorized
+
+### Execution Model
+
+Regent delegates execution to:
+- Wardens
+- Emissaries
+- sidecar executors
+
+Regent itself does NOT directly execute operations.
 
 ## Security Boundary
 
@@ -45,4 +64,4 @@ Sensitive cluster-wide authority remains isolated.
 
 ## Summary
 
-Regent is the secure coordination and orchestration authority of the HA-Hermes collective.
+Regent is the secure coordination and orchestration authority of the HA-Hermes collective — a cognitive brain, not an executor.

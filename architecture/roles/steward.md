@@ -1,24 +1,27 @@
-# Steward Role
+# Steward — Application Cognitive Role
 
 ## Overview
 
-A Steward is a declared Hermes role responsible for application cognition and operational assistance.
+Steward is a declarative, application-scoped cognitive agent.
 
 Stewards are intentionally created after bootstrap.
 
-They help understand and coordinate application operations.
+They understand and coordinate application operations within a defined scope.
 
 ## Declaration
 
-Stewards are user-declared and scoped.
+Stewards are user-declared via CRDs and configuration.
+
+Observation scope is NOT dynamically chosen freely. It is defined via:
+- CRDs
+- Observable configuration
+- system knowledge constraints
+- cognition history adaptation
 
 Typical scope:
-
 - namespace
 - service domain
 - shared application boundary
-
-Responsibility emerges from declared scope.
 
 ## Responsibilities
 
@@ -26,11 +29,23 @@ Responsibility emerges from declared scope.
 - observe workloads and services
 - inspect logs and metrics
 - understand topology and dependencies
+- application/namespace reasoning
 
 ### Incident Analysis
 - diagnose failures
 - correlate incidents
 - coordinate remediation
+
+### Reporting
+- service-level reporting
+- operational guidance
+- cluster-wide reporting (optional participation)
+
+### Alerting
+- optional alerting participation
+
+### Configuration
+- CLI-based product configuration interface
 
 ### Memory and Context
 - maintain application knowledge
@@ -42,6 +57,14 @@ Responsibility emerges from declared scope.
 - coordinate with Emissaries
 - participate in Regent coordination
 
+## Observation Perception
+
+Stewards independently compute their own perception policy using:
+- role-native knowledge (application/domain heuristics)
+- declaration data (CRDs, role specs, scope boundaries)
+- Observable hints (signal sources, thresholds, sampling guidance)
+- cognition memory (learned relevance, signal decay, reinforcement)
+
 ## Constraints
 
 - Stewards do not replace Kubernetes operators
@@ -50,4 +73,4 @@ Responsibility emerges from declared scope.
 
 ## Summary
 
-Stewards are declared application-scoped cognitive operators.
+Stewards are declared application-scoped cognitive operators with CRD-defined observation boundaries.

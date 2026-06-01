@@ -14,6 +14,7 @@
 
 ## Cognition
 - architecture/cognition/README.md
+- architecture/cognition/perception.md
 - architecture/cognition/observation.md
 - architecture/cognition/session.md
 - architecture/cognition/task.md
@@ -21,6 +22,12 @@
 - architecture/cognition/skill.md
 - architecture/cognition/intent.md
 
+## State
+- architecture/state/cognition.md
+
 ## ADRs
 - architecture/adrs/0001-kubernetes-as-substrate.md
 - architecture/adrs/0002-non-duplication-of-reconciliation.md
+
+## Bootstrap
+- bootstrap/README.md
