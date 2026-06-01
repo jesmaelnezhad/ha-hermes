@@ -20,18 +20,18 @@ Kubernetes plus HA-Hermes follows the same model:
 
 ## System Planes
 
-### 1. Hermes Control Plane
+### Native Hermes Plane
 - Wardens on Kubernetes nodes
-- leader election via Lease
-- Regent coordination state
+- Regent as secure coordination authority
+- collective cognition and orchestration
 
-### 2. Application Plane
-- Stewards per namespace or service domain
+### Application Plane
+- declared Stewards per namespace or service domain
 - application cognition
 - observability and incident reasoning
 
-### 3. External Infrastructure Plane
-- Emissaries on Linux and external systems
+### External Infrastructure Plane
+- declared Emissaries on Linux and external systems
 - extends Hermes beyond Kubernetes
 
 ## Principles
@@ -43,12 +43,11 @@ Kubernetes plus HA-Hermes follows the same model:
 - etcd stores runtime truth
 - Hermes stores cognitive state
 
-## Leadership
+## Coordination
 
-Leadership is a state:
+Regent is a native authority role.
 
-- one Warden becomes Regent
-- Regent coordinates Hermes collective behavior
+Regent coordinates collective behavior, arbitrates conflicts, and orchestrates secure workflows.
 
 ## Goal
 
