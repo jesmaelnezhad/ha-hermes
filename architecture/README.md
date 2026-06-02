@@ -31,6 +31,8 @@ HA-Hermes provides:
 ### Cognition
 - cognition/README.md
 - cognition/observation.md
+- cognition/perception.md
+- cognition/observable.md
 - cognition/session.md
 - cognition/task.md
 - cognition/memory.md
