@@ -29,7 +29,7 @@
 ## ADRs
 - architecture/adrs/0001-kubernetes-as-substrate.md
 - architecture/adrs/0002-non-duplication-of-reconciliation.md
-- architecture/adrs/0003-hermes-runtime-and-independent-distributions.md
+- architecture/adrs/0003-hermes-fabric-and-independent-distributions.md
 - architecture/adrs/0004-leverage-existing-infrastructure.md
 
 ## Bootstrap

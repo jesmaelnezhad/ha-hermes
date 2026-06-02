@@ -45,5 +45,5 @@ HA-Hermes provides:
 ### ADRs
 - adrs/0001-kubernetes-as-substrate.md
 - adrs/0002-non-duplication-of-reconciliation.md
-- adrs/0003-hermes-runtime-and-independent-distributions.md
+- adrs/0003-hermes-fabric-and-independent-distributions.md
 - adrs/0004-leverage-existing-infrastructure.md

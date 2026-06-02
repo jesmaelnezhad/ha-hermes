@@ -42,7 +42,7 @@ The Hermes Fabric installation MUST be as lightweight as possible. It MUST NOT f
 
 | Alternative                                    | Why Rejected                                                                                                              |
 | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| **Bundle everything (self-contained install)** | Contradicts ADR 0003 philosophy; forces redundant infrastructure; expensive for users who already have storage, DBs, etc. |
+| **Bundle everything (self-contained install)** | Contradicts ADR 0002 philosophy; forces redundant infrastructure; expensive for users who already have storage, DBs, etc. |
 | **Require specific infrastructure**            | Locks users into one vendor/stack; reduces adoption; contradicts existing-system integration principle                    |
 | **No defaults at all**                         | Too high a barrier for new users; reasonable defaults with opt-out are acceptable                                         |
 

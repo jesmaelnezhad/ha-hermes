@@ -4,11 +4,11 @@
 
 Regent is a **native singleton role** responsible for cluster-wide cognition and orchestration.
 
-Regent is the brain and orchestration authority — execution is delegated to Wardens, Emissaries, and sidecar executors.
+Regent is the brain and orchestration authority — execution is delegated to sidecar executors, not to other distributions. Regent is independent of Warden, Steward, and Emissary.
 
 NOT emergent. NOT elected. NOT derived from Warden.
 
-Regent must remain useful even when no Warden or Steward exists.
+Regent must remain useful even when no other distribution exists.
 
 ## Deployment
 
@@ -47,11 +47,10 @@ When Regent is absent, conflicts are surfaced and deferred to human authority.
 ### Execution Model
 
 Regent delegates execution to:
-- Wardens
-- Emissaries
 - sidecar executors
+- controlled operational tools
 
-Regent uses permitted execution mechanisms rather than collapsing cognition and unrestricted execution into a single trust boundary.
+Regent uses permitted execution mechanisms rather than collapsing cognition and unrestricted execution into a single trust boundary. Regent may possess isolated or tool-mediated execution capability. Regent does NOT delegate to Warden, Steward, or Emissary — it is an independent distribution.
 
 ## Persistence
 
