@@ -41,10 +41,10 @@ Observable may be associated with:
 
 ## Future Direction
 
-Observable is expected to become a CRD and a first-class cognition artifact in HA-Hermes.
+Observable is expected to become a CRD and a first-class cognition artifact in Hermes-on-K8s.
 
 Its detailed schema and lifecycle remain future design work.
 
 ## Summary
 
-Observable is a declarative perception-guidance artifact used to influence adaptive cognition in HA-Hermes.
+Observable is a declarative perception-guidance artifact used to influence adaptive cognition in Hermes-on-K8s.

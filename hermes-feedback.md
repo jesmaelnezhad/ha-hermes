@@ -2,7 +2,7 @@
 
 > Role: Software Architect & Developer
 > Date: 2026-05-31
-> Repo: ha-hermes (master)
+> Repo: hermes-on-k8s (master)
 
 ---
 

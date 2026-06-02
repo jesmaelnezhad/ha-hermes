@@ -11,9 +11,9 @@ HA-Hermes is a **distributed cognitive system with adaptive perception**, not a 
 
 ### Three Concepts
 
-- **Runtime** — shared cognitive substrate (cognition, perception, execution, persistence)
+- **Fabric** — shared cognitive substrate (cognition, perception, execution, persistence)
 - **Role** — responsibility domain (not a runtime state, not a deployment form)
-- **Distribution** — independently installable assembly (Runtime + role personality + tools + persistence + deployment form)
+- **Distribution** — independently installable assembly (Fabric + role personality + tools + persistence + deployment form)
 
 ### Structural Decomposition
 
@@ -49,6 +49,7 @@ Each distribution is independently deployable and independently useful.
 - Regent alone — valid, useful, operational
 - Warden alone — valid, useful, operational
 - Steward alone — valid, useful, operational
+- Emissary alone — valid, useful, operational
 
 Integration is optional. Independence is required.
 

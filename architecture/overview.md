@@ -36,13 +36,13 @@ Kubernetes plus HA-Hermes follows the same model:
 
 HA-Hermes is distributed as independently installable assemblies:
 
-**Hermes Runtime** — shared cognitive substrate providing:
+**Hermes Fabric** — shared cognitive substrate providing:
 - cognition store, memory, adaptive perception
 - session and task lifecycle
 - execution framework
 - persistence
 
-**Distributions** — Runtime + role personality + tools + persistence + deployment form:
+**Distributions** — Fabric + role personality + tools + persistence + deployment form:
 - Regent Distribution — cluster cognitive authority
 - Warden Distribution — node cognitive executor
 - Steward Distribution — application cognitive

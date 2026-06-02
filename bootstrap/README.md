@@ -48,6 +48,7 @@ Each distribution is independently deployable and independently useful:
 - Regent alone — valid and operational
 - Warden alone — valid and operational
 - Steward alone — valid and operational
+- Emissary alone — valid and operational
 
 Integration between distributions is optional. Independence is required.
 
@@ -63,7 +64,7 @@ Integration between distributions is optional. Independence is required.
 
 A shared storage layer must be provisioned:
 
-- `/ha-hermes` volume
+- `/hermes-on-k8s` volume
 - or object storage bucket
 
 Used for:
@@ -72,7 +73,7 @@ Used for:
 - sessions
 - skills
 
-Every runtime-backed distribution maintains persistent cognition. Loss of pod identity does not imply loss of cognition.
+Every fabric-backed distribution maintains persistent cognition. Loss of pod identity does not imply loss of cognition.
 
 ## Post-Bootstrap State
 

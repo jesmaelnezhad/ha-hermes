@@ -6,6 +6,8 @@ Emissary is a declarative external-infrastructure cognitive agent.
 
 Emissaries extend Hermes cognition and execution beyond the cluster to non-Kubernetes systems.
 
+Emissary is operationalized as **Emissary Distribution** — an independently installable assembly of Hermes Fabric + Emissary personality + external system tools + persistent cognition.
+
 ## Declaration
 
 Emissaries are intentionally declared after bootstrap.
@@ -59,7 +61,8 @@ Emissaries independently compute their own perception policy using:
 - Emissaries are not part of Kubernetes control plane
 - Emissaries do not replace reconciliation systems
 - Emissaries do not become Regent
+- Emissary Distribution is independently deployable and independently useful
 
 ## Summary
 
-Emissaries are declared external cognitive operators that extend Hermes beyond Kubernetes.
+Emissaries are declared external cognitive operators that extend Hermes beyond Kubernetes. Emissary Distribution is a self-cognitive, self-persistent, independently installable assembly.

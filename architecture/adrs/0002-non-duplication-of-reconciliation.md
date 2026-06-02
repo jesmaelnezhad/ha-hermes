@@ -20,9 +20,9 @@ Creating parallel Hermes reconciliation systems risks conflict and duplicated au
 
 ## Decision
 
-HA-Hermes SHALL avoid reimplementing reconciliation mechanisms that already exist in Kubernetes.
+hermes-on-k8s SHALL avoid reimplementing reconciliation mechanisms that already exist in Kubernetes.
 
-Instead HA-Hermes SHALL:
+Instead hermes-on-k8s SHALL:
 
 - observe existing reconciliation
 - diagnose failures
@@ -32,4 +32,4 @@ Instead HA-Hermes SHALL:
 
 ## Consequences
 
-HA-Hermes becomes a meta-operational and cognitive layer rather than a competing controller framework.
+hermes-on-k8s becomes a meta-operational and cognitive layer rather than a competing controller framework.

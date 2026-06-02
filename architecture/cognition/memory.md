@@ -19,7 +19,7 @@ Memory:
 - persists
 - evolves
 - may influence future Sessions and Tasks
-- **influences future perception policies** (adaptive layer)
+- influences future perception policies (adaptive layer)
 
 ## Role in Perception
 

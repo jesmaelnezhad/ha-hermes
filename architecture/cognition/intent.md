@@ -19,7 +19,7 @@ Intent:
 - guides reasoning
 - influences Sessions and Tasks
 - may originate from humans or declarative systems
-- **influences perception prioritization** (what an agent should pay attention to)
+- influences perception prioritization (what an agent should pay attention to)
 
 ## Role in Perception
 

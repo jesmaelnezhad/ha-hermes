@@ -5,9 +5,7 @@ Accepted
 
 ## Context
 
-Early HA-Hermes architecture language suggested that HA-Hermes might become a distributed operating system.
-
-Further analysis clarified that Kubernetes already provides the distributed execution and reconciliation substrate.
+Kubernetes already provides the distributed execution and reconciliation substrate.
 
 Kubernetes already provides:
 
@@ -21,9 +19,9 @@ Duplicating these mechanisms would create conflict and controller overlap.
 
 ## Decision
 
-HA-Hermes SHALL operate as a distributed cognitive operator layered on top of Kubernetes.
+hermes-on-k8s SHALL operate as a distributed cognitive operator layered on top of Kubernetes.
 
-HA-Hermes SHALL:
+hermes-on-k8s SHALL:
 
 - observe
 - reason
@@ -31,11 +29,11 @@ HA-Hermes SHALL:
 - remember
 - automate
 
-HA-Hermes SHALL NOT attempt to replace Kubernetes-native reconciliation.
+hermes-on-k8s SHALL NOT attempt to replace Kubernetes-native reconciliation.
 
 ## Consequences
 
 - Kubernetes controllers remain authoritative
 - Existing operators remain enabled
-- HA-Hermes acts as a meta-operational layer
+- hermes-on-k8s acts as a meta-operational layer
 - Warden, Steward and Emissary coordinate operations using native Kubernetes primitives

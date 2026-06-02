@@ -2,7 +2,7 @@
 
 ## Overview
 
-HA-Hermes is a distributed cognitive operator with **adaptive perception**.
+Hermes-on-K8s is a distributed cognitive operator with persistent cognition layer and adaptive perception.
 
 This directory defines the information model used by the Hermes collective.
 
@@ -10,7 +10,7 @@ The model is defined before implementation schemas or CRDs.
 
 ## System Identity
 
-HA-Hermes is a distributed cognitive system with adaptive perception, **not** a static observability pipeline.
+Hermes-on-K8s is a distributed cognitive system with adaptive perception, **not** a static observability pipeline.
 
 ## Cognitive Flow
 

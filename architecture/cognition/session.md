@@ -35,4 +35,4 @@ Memory represents durable knowledge.
 
 ## Role
 
-Sessions often emerge from observations and may create tasks or durable knowledge.
+Sessions often emerge from observations or human commands and may create tasks or durable knowledge.

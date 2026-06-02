@@ -2,9 +2,9 @@
 
 ## Overview
 
-Perception in HA-Hermes is NOT a static filter or a centralized observability pipeline.
+Perception in Hermes-on-K8s is NOT a static filter or a centralized observability pipeline.
 
-It is a **dynamic, adaptive attention mechanism** that each agent computes independently.
+It is a dynamic, adaptive attention mechanism that each agent computes independently.
 
 ## Definition
 
@@ -66,11 +66,11 @@ Each agent independently computes its own perception policy using all four sourc
 
 ## Relationship to Other Artifacts
 
-| Artifact | Relationship |
-|----------|-------------|
-| Observation | Output of perception — selected signals that enter cognition |
-| Session | Consumes observations, may update perception policy via memory |
-| Task | May be triggered by observations |
-| Memory | Stores perception learnings — feeds back into future perception |
-| Intent | Influences what an agent should prioritize observing |
-| Skill | May encode perception patterns for specific operational domains |
+| Artifact    | Relationship                                                                      |
+| ----------- | --------------------------------------------------------------------------------- |
+| Observation | Output of perception — selected signals that enter cognition                      |
+| Session     | Consumes observations, may update perception policy via memory                    |
+| Task        | May be triggered by observations                                                  |
+| Memory      | Stores perception learnings — feeds back into future perception                   |
+| Intent      | Influences what an agent should prioritize observing                              |
+| Skill       | May encode perception patterns or known behavior for specific operational domains |
