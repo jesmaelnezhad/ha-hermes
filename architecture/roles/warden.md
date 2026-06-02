@@ -2,19 +2,16 @@
 
 ## Overview
 
-Warden is a Kubernetes node–resident cognitive executor and the node-local brain and hands.
+Warden is a Kubernetes node-resident cognitive executor and the node-local brain and hands.
 
-Wardens operate as cognitive and operational assistants with node-local scope.
+Wardens operate as cognitive and operational assistants with node-local scope. Each Warden is independently useful — it can operate without Regent, Stewens, or Emissary present.
 
 Wardens do NOT replace Kubernetes control loops.
-
-- does not become Regent
-- operates within node scope
 
 ## Deployment
 
 - Kubernetes DaemonSet
-- one Warden per node
+- one Warden per node (or selected nodes)
 
 One or many Wardens may exist. They may be deployed to one node, selected nodes, or all nodes depending on operational needs.
 
@@ -35,8 +32,7 @@ One or many Wardens may exist. They may be deployed to one node, selected nodes,
 - workload and node observation
 
 ### Cognitive Execution
-- execute delegated tasks from Regent
-- execute delegated tasks from Stewards
+- execute node-local cognitive tasks
 - participate in Hermes shared memory
 - maintain local reasoning context
 - contribute cluster observations
@@ -59,11 +55,11 @@ Warden cognition is durable:
 
 Loss of pod identity does not imply loss of cognition.
 
-## Relationship with Regent
+## Constraints
 
-Regent is a separate native role.
-
-Wardens coordinate with Regent when needed and execute delegated work.
+- Wardens do not become Regent
+- Wardens operate within node scope
+- Wardens are independently useful without other distributions
 
 ## Summary
 

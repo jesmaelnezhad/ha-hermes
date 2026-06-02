@@ -2,7 +2,7 @@
 
 ## Overview
 
-HA-Hermes maintains a distributed cognitive layer.
+Hermes-on-K8s maintains a distributed cognitive layer.
 
 This layer is distinct from:
 - Git (declarative intent)

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "architecture/roles/steward.md",
+                "file": "architecture/cognition/intent.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "steward"
+              "title": "intent"
             }
           }
         ]
@@ -185,23 +185,31 @@
   },
   "active": "0ce4a62fedd56abe",
   "lastOpenFiles": [
-    "architecture/roles/role-model.md",
+    "docs-index.md",
+    "README.md",
+    "hermes-feedback.md",
+    "architecture/overview.md",
+    "architecture/README.md",
+    "architecture/state/cognition.md",
+    "architecture/roles/warden.md",
+    "architecture/roles/steward.md",
+    "architecture/roles/regent.md",
     "architecture/roles/emissary.md",
+    "architecture/roles/role-model.md",
+    "architecture/cognition/observation.md",
+    "architecture/cognition/observable.md",
+    "architecture/cognition/memory.md",
+    "architecture/cognition/intent.md",
     "architecture/cognition/task.md",
     "architecture/cognition/skill.md",
     "architecture/cognition/session.md",
     "architecture/cognition/README.md",
     "architecture/cognition/perception.md",
-    "architecture/cognition/observation.md",
-    "architecture/cognition/observable.md",
-    "architecture/cognition/memory.md",
-    "architecture/cognition/intent.md",
     "architecture/adrs/0003-hermes-fabric-and-independent-distributions.md",
     "architecture/adrs/0004-leverage-existing-infrastructure.md",
     "architecture/adrs/0002-non-duplication-of-reconciliation.md",
     "architecture/adrs/0004-don't-make-the-wheel-again.md",
     "architecture/adrs/0001-kubernetes-as-substrate.md",
-    "architecture/adrs/0003-hermes-runtime-and-independent-distributions 1.md",
-    "architecture/roles/regent.md"
+    "architecture/adrs/0003-hermes-runtime-and-independent-distributions 1.md"
   ]
 }

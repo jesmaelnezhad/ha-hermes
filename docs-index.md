@@ -1,10 +1,5 @@
 # Documentation Index
 
-## Core
-- README.md
-- architecture/overview.md
-- architecture/README.md
-
 ## Role Model
 - architecture/roles/role-model.md
 - architecture/roles/warden.md

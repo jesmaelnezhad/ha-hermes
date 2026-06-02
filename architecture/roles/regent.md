@@ -2,12 +2,10 @@
 
 ## Overview
 
-Regent is a **native singleton role** responsible for cluster-wide cognition and orchestration.
+Regent is a **singleton role** responsible for cluster-wide cognition and orchestration.
 
-Regent is the brain and orchestration authority — execution is delegated to sidecar executors, not to other distributions. Regent is independent of Warden, Steward, and Emissary.
-
-NOT emergent. NOT elected. NOT derived from Warden.
-
+Regent is the brain and orchestration authority — execution is delegated to sidecar executors.
+ 
 Regent must remain useful even when no other distribution exists.
 
 ## Deployment
@@ -22,9 +20,9 @@ Regent must remain useful even when no other distribution exists.
 - node add / remove / recovery
 - cluster lifecycle orchestration
 
-### Cross-Agent Coordination
-- coordinate Wardens
-- coordinate Stewards
+### Cross-Distribution Coordination
+- coordinate with Wardens when present
+- coordinate with Stewards when present
 - maintain collective state awareness
 - orchestrate cross-domain work
 
@@ -50,7 +48,7 @@ Regent delegates execution to:
 - sidecar executors
 - controlled operational tools
 
-Regent uses permitted execution mechanisms rather than collapsing cognition and unrestricted execution into a single trust boundary. Regent may possess isolated or tool-mediated execution capability. Regent does NOT delegate to Warden, Steward, or Emissary — it is an independent distribution.
+Regent uses permitted execution mechanisms rather than collapsing cognition and unrestricted execution into a single trust boundary. Regent may possess isolated or tool-mediated execution capability.
 
 ## Persistence
 
@@ -67,10 +65,8 @@ Loss of pod identity does not imply loss of cognition.
 
 Regent exists partly to maintain a distinct trust boundary.
 
-Wardens do not automatically inherit Regent authority.
-
 Sensitive cluster-wide authority remains isolated.
 
 ## Summary
 
-Regent is the secure coordination and orchestration authority of the HA-Hermes collective — a cognitive brain, not an executor.
+Regent is the secure coordination and orchestration authority of the Hermes-on-K8s collective — a cognitive brain, not an executor.

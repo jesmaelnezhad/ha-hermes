@@ -4,11 +4,10 @@
 
 Steward is a declarative, application-scoped cognitive agent.
 
-Stewards are intentionally created after bootstrap.
+Stewards are intentionally created after installing the fabric.
 
 They understand and coordinate application operations within a defined scope.
 
-Steward must remain useful without Regent or Warden.
 
 ## Declaration
 
