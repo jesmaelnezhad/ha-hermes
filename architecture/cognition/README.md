@@ -42,14 +42,15 @@ Hermes does NOT store all raw signals.
 ### Cognitive Observation Layer
 Only meaningful signals become Observations.
 
-Observations are NOT raw logs — they are **selected, context-relevant signals** filtered by each agent's perception policy.
+Observations are NOT raw logs — they are selected, context-relevant signals shaped by each agent's adaptive perception policy.
 
 ### Cognitive Layer
 - Sessions, Tasks, Intent, Memory updates
 
 ## Cognitive Artifacts
 
-- Perception — adaptive attention mechanism (NEW)
+- Perception — adaptive attention mechanism
+- Observable — perception guidance artifact
 - Observation — selected, context-relevant signals
 - Session — bounded active reasoning
 - Task — executable work unit
@@ -58,5 +59,7 @@ Observations are NOT raw logs — they are **selected, context-relevant signals*
 - Intent — desired operational expectations
 
 These are conceptual artifacts and are not automatically Kubernetes resources.
+
+Observable is expected to evolve into a first-class CRD and cognition artifact.
 
 Persistence and implementation are defined later.
