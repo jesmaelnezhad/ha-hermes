@@ -4,14 +4,11 @@
 
 Regent is a **native singleton role** responsible for cluster-wide cognition and orchestration.
 
-Regent is the brain and orchestration authority — execution is delegated, not directly performed.
+Regent is the brain and orchestration authority — execution is delegated to Wardens, Emissaries, and sidecar executors.
 
-### Critical Constraints
+NOT emergent. NOT elected. NOT derived from Warden.
 
-- NOT emergent
-- NOT elected
-- NOT derived from Warden state
-- NOT a runtime role transition
+Regent must remain useful even when no Warden or Steward exists.
 
 ## Deployment
 
@@ -36,6 +33,8 @@ Regent is the brain and orchestration authority — execution is delegated, not 
 - coordinate competing priorities
 - arbitrate cross-scope decisions
 
+When Regent is absent, conflicts are surfaced and deferred to human authority.
+
 ### Cluster Reporting
 - cluster-wide reporting
 - administrative CLI interface for operators
@@ -52,7 +51,18 @@ Regent delegates execution to:
 - Emissaries
 - sidecar executors
 
-Regent itself does NOT directly execute operations.
+Regent uses permitted execution mechanisms rather than collapsing cognition and unrestricted execution into a single trust boundary.
+
+## Persistence
+
+Regent cognition is durable:
+- cluster knowledge
+- learned relevance
+- operational history
+- perception adaptation
+- reporting history
+
+Loss of pod identity does not imply loss of cognition.
 
 ## Security Boundary
 

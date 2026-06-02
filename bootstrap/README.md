@@ -6,37 +6,50 @@ This directory defines how to install HA-Hermes into a fresh Kubernetes cluster 
 
 ## Bootstrap Targets
 
-HA-Hermes can bootstrap into:
+HA-Hermes distributions install into:
 
 - Kubernetes clusters (primary target)
 - Linux VMs
-- bare metal systems (via Emissary)
+- bare metal systems (via Emissary Distribution)
 
 ## Core Installation Flow
 
-### 1. Install Wardens (Control Plane)
+### 1. Install Warden Distribution
 
-- Deploy Warden DaemonSet on all Kubernetes nodes
+- Deploy Warden DaemonSet on Kubernetes nodes
 - Enable privileged execution
 - Enable Kubernetes API access
-- Enable leader election (Lease-based)
+- Each Warden is independently useful — operates as node-local brain and hands
 
-### 2. Initialize Regent Election
+### 2. Install Regent Distribution
 
-- Kubernetes Lease object created
-- One Warden becomes Regent
+- Deploy Regent as a singleton cluster-scoped distribution
+- HA-aware deployment
 - Regent starts cluster coordination loop
+- Regent must be useful even without Wardens or Stewards present
 
-### 3. Install Steward Layer
+### 3. Install Steward Distribution
 
 - Deploy Steward per namespace or application domain
 - Attach to workload namespaces
 - Enable observability hooks
+- Highly available deployment model
+- Steward must be useful without Regent or Warden
 
-### 4. Optional: Emissary Deployment
+### 4. Optional: Install Emissary Distribution
 
 - Install agent on external systems via SSH or container
-- Register with cluster via Warden API
+- Register with cluster
+- Operates independently on non-Kubernetes infrastructure
+
+## Distribution Independence
+
+Each distribution is independently deployable and independently useful:
+- Regent alone — valid and operational
+- Warden alone — valid and operational
+- Steward alone — valid and operational
+
+Integration between distributions is optional. Independence is required.
 
 ## Required Kubernetes Primitives
 
@@ -54,21 +67,17 @@ A shared storage layer must be provisioned:
 - or object storage bucket
 
 Used for:
-
 - tasks
 - memory
 - sessions
 - skills
 
+Every runtime-backed distribution maintains persistent cognition. Loss of pod identity does not imply loss of cognition.
+
 ## Post-Bootstrap State
 
 After installation:
-
-- Wardens maintain cluster health
-- Regent coordinates system state
+- Wardens maintain node health
+- Regent coordinates cluster state
 - Stewards manage applications
 - Emissaries extend system reach
-
-## Goal
-
-After bootstrap, no manual cluster operations are required outside Hermes itself.

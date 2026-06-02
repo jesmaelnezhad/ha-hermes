@@ -15,6 +15,7 @@
 ## Cognition
 - architecture/cognition/README.md
 - architecture/cognition/perception.md
+- architecture/cognition/observable.md
 - architecture/cognition/observation.md
 - architecture/cognition/session.md
 - architecture/cognition/task.md

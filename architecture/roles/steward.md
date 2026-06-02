@@ -8,6 +8,8 @@ Stewards are intentionally created after bootstrap.
 
 They understand and coordinate application operations within a defined scope.
 
+Steward must remain useful without Regent or Warden.
+
 ## Declaration
 
 Stewards are user-declared via CRDs and configuration.
@@ -24,6 +26,13 @@ Typical scope:
 - namespace
 - service domain
 - shared application boundary
+
+## Deployment
+
+- highly available deployment model
+- replicated runtime
+- durable cognition
+- resilient operational continuity
 
 ## Responsibilities
 
@@ -77,6 +86,8 @@ Observable influences perception but does not centrally control it.
 - Stewards do not own reconciliation authority
 - Kubernetes remains authoritative for runtime convergence
 
+When conflicting decisions arise and Regent is absent, Stewards defer to human authority rather than assume arbitration power.
+
 ## Summary
 
-Stewards are declared application-scoped cognitive operators with adaptive perception and declarative scope.
+Stewards are declared application-scoped cognitive operators with adaptive perception, HA deployment, and CRD-defined scope.

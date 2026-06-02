@@ -9,12 +9,10 @@ HA-Hermes adds cognition, memory, diagnosis, and operational coordination.
 ## Core Model
 
 Linux plus Hermes CLI:
-
 - Linux provides runtime and execution primitives
 - Hermes provides cognition and operational assistance
 
 Kubernetes plus HA-Hermes follows the same model:
-
 - Kubernetes is the distributed substrate
 - HA-Hermes is the distributed cognitive operator
 
@@ -22,7 +20,7 @@ Kubernetes plus HA-Hermes follows the same model:
 
 ### Native Hermes Plane
 - Wardens on Kubernetes nodes
-- Regent as secure coordination authority
+- Regent as cluster cognitive authority
 - collective cognition and orchestration
 
 ### Application Plane
@@ -34,6 +32,24 @@ Kubernetes plus HA-Hermes follows the same model:
 - declared Emissaries on Linux and external systems
 - extends Hermes beyond Kubernetes
 
+## Distribution Layer
+
+HA-Hermes is distributed as independently installable assemblies:
+
+**Hermes Runtime** — shared cognitive substrate providing:
+- cognition store, memory, adaptive perception
+- session and task lifecycle
+- execution framework
+- persistence
+
+**Distributions** — Runtime + role personality + tools + persistence + deployment form:
+- Regent Distribution — cluster cognitive authority
+- Warden Distribution — node cognitive executor
+- Steward Distribution — application cognitive
+- Emissary Distribution — external system cognitive
+
+Each distribution is independently deployable, independently useful, self-cognitive, and self-persistent.
+
 ## Principles
 
 - Kubernetes reconciliation remains authoritative
@@ -42,13 +58,16 @@ Kubernetes plus HA-Hermes follows the same model:
 - Git stores declarative intent
 - etcd stores runtime truth
 - Hermes stores cognitive state
+- Roles define responsibility, not runtime states
+- Perception is adaptive and distributed
+- Distribution independence — each distribution is valid without others
 
 ## Coordination
 
-Regent is a native authority role.
+Regent is the native authority role for cluster-wide coordination, arbitration, and orchestration.
 
-Regent coordinates collective behavior, arbitrates conflicts, and orchestrates secure workflows.
+When Regent is absent, conflicts are surfaced and deferred to human authority.
 
 ## Goal
 
-Provide a distributed cognitive and operational layer that helps maintain infrastructure and applications through reasoning and coordination.
+Provide a distributed cognitive and operational layer that helps maintain infrastructure and applications through reasoning, coordination, and adaptive perception.

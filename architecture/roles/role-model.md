@@ -2,13 +2,21 @@
 
 ## Overview
 
-HA-Hermes roles define **responsibility domains**, not implementation forms or runtime states.
+HA-Hermes has three separate concepts:
 
-No role is an emergent state of another role.
-No promotion or election-based identity transitions exist.
+- **Runtime** — shared cognitive substrate
+- **Role** — responsibility domain
+- **Distribution** — independently installable assembly
+
+Roles define responsibility domains, not implementation forms or runtime states.
+
+Distributions operationalize roles. A distribution is an independently installable assembly built from Hermes Runtime + role personality + tools + persistence + deployment form.
+
+Each distribution is independently deployable, independently useful, self-cognitive, and self-persistent.
+
+No role is an emergent state of another role. No promotion or election-based identity transitions exist.
 
 Responsibility emerges from:
-
 - role type
 - placement
 - declared scope
@@ -19,11 +27,13 @@ Native roles are installed as part of HA-Hermes bootstrap.
 
 ### Warden
 
-Node-resident cognitive executor. Runs on every Kubernetes node as a DaemonSet.
+Node-resident cognitive executor. Node-local brain and hands. Runs on every Kubernetes node as a DaemonSet.
 
 ### Regent
 
-Cluster cognitive authority. Singleton role responsible for cluster-wide cognition and orchestration. NOT emergent, NOT elected, NOT derived from Warden.
+Cluster cognitive authority. Singleton role responsible for cluster-wide cognition and orchestration. Brain and orchestration authority — execution is delegated to Wardens, Emissaries, and sidecars.
+
+NOT emergent. NOT elected. NOT derived from Warden.
 
 ## Declared Roles
 
@@ -31,7 +41,7 @@ Declared roles are created intentionally after bootstrap via CRDs and configurat
 
 ### Steward
 
-Application or namespace cognitive role. Observation scope is defined via CRDs, Observable configuration, system knowledge constraints, and cognition history adaptation — not dynamically chosen freely.
+Application or namespace cognitive role. Observation scope is defined via CRDs, Observable configuration, system knowledge constraints, and cognition history adaptation.
 
 ### Emissary
 
