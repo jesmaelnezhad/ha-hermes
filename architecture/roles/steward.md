@@ -12,11 +12,13 @@ They understand and coordinate application operations within a defined scope.
 
 Stewards are user-declared via CRDs and configuration.
 
-Observation scope is NOT dynamically chosen freely. It is defined via:
-- CRDs
-- Observable configuration
-- system knowledge constraints
-- cognition history adaptation
+Perception is adaptive and continuously computed.
+
+Stewards derive perception policy from multiple sources:
+- declaration data and CRDs
+- role-native knowledge
+- Observable guidance
+- cognition history and learned relevance
 
 Typical scope:
 - namespace
@@ -60,10 +62,14 @@ Typical scope:
 ## Observation Perception
 
 Stewards independently compute their own perception policy using:
-- role-native knowledge (application/domain heuristics)
+- role-native knowledge (application and domain heuristics)
 - declaration data (CRDs, role specs, scope boundaries)
-- Observable hints (signal sources, thresholds, sampling guidance)
+- Observable guidance (signal sources, thresholds, sampling guidance)
 - cognition memory (learned relevance, signal decay, reinforcement)
+
+Perception may evolve over time as Stewards learn what is valuable, noisy, relevant, or no longer useful to observe.
+
+Observable influences perception but does not centrally control it.
 
 ## Constraints
 
@@ -73,4 +79,4 @@ Stewards independently compute their own perception policy using:
 
 ## Summary
 
-Stewards are declared application-scoped cognitive operators with CRD-defined observation boundaries.
+Stewards are declared application-scoped cognitive operators with adaptive perception and declarative scope.
