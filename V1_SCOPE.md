@@ -2,15 +2,13 @@
 
 ## Purpose
 
-This document defines the first buildable version of k8s-hermes-collective.
+This document defines the first production-capable version of k8s-hermes-collective.
 
-The objective of v1 is not to realize the full architectural vision.
+The objective of v1 is to deliver the complete Runtime platform.
 
-The objective is to validate the core premise:
+The objective is not to build a large ecosystem of specialized agents, packages, collectives, or organizational patterns. Those should be able to emerge on top of the platform without requiring changes to the platform itself.
 
-A Kubernetes resource can declaratively describe a cognitive runtime and a controller can reliably realize, maintain, and recover that runtime using Hermes.
-
-Every feature included in v1 should contribute directly to validating that premise.
+V1 should establish a Kubernetes-native foundation for operating Hermes runtimes with persistence, continuity, availability, tooling, connectivity, and observability.
 
 ---
 
@@ -18,22 +16,36 @@ Every feature included in v1 should contribute directly to validating that premi
 
 A successful v1 should demonstrate the following capabilities.
 
-- A Runtime resource can be created.
-- The controller can reconcile the Runtime.
-- A Hermes runtime can be launched.
-- Runtime state can survive pod replacement.
-- Tools can be made available to the runtime.
+- A Runtime resource can be created and reconciled.
+- A Hermes runtime can be launched and managed.
+- Runtime continuity can survive pod replacement.
+- Existing sessions can be reused.
+- Runtime availability can be maintained through failure scenarios.
+- Tools can be attached and used.
+- MCP-based integrations can be attached and used.
+- Input and output channels can be configured.
 - Runtime status is observable through Kubernetes.
 - Runtime configuration is declarative.
 - Runtime lifecycle is controller-managed.
+- The platform can support multiple operational personalities without code changes.
 
-If these capabilities are proven, the project will have validated its core architecture.
+If these capabilities are proven, the project will have validated its central architectural thesis.
 
 ---
 
 # Non-Goals
 
 The following concerns are intentionally out of scope for v1.
+
+## Collective Systems
+
+V1 focuses on individual Runtime resources.
+
+Multi-runtime collectives and collaboration models belong to a future phase.
+
+## Advanced Package Ecosystems
+
+Package catalogs, marketplaces, registries, and distribution systems are not required.
 
 ## Advanced Memory Systems
 
@@ -47,23 +59,9 @@ A Runtime should behave as a single cognitive actor.
 
 Distributed reasoning systems are not required.
 
-## Advanced Package Ecosystems
+## Organizational Role Models
 
-Runtime packages may be discussed architecturally but should not be required for v1.
-
-## Complex Perception Systems
-
-Perception should remain simple.
-
-A runtime can begin with static configuration and evolve later.
-
-## Rich Channel Ecosystems
-
-Only a minimal communication model is required.
-
-## Runtime Marketplaces
-
-Package distribution, catalogs, and registries should be deferred.
+Cluster maintainers, product maintainers, support assistants, and similar concepts should not become native platform abstractions.
 
 ## Multi-Controller Architectures
 
@@ -75,41 +73,42 @@ A single controller implementation is sufficient.
 
 V1 should contain a single primary CRD.
 
-Conceptually:
+Runtime is the native abstraction of the platform.
 
-Runtime
+The Runtime resource must be capable of expressing:
 
-The Runtime resource is the native abstraction of the platform.
+- Runtime configuration
+- Session configuration
+- Persistence requirements
+- Availability requirements
+- Tool configuration
+- MCP configuration
+- Channel configuration
+- Package composition
 
-Supporting CRDs should be avoided unless they are required to prove core functionality.
-
-The platform should remain intentionally small.
+The Runtime resource is the platform contract.
 
 ---
 
-# Runtime Specification
+# Runtime Packages
 
-The first Runtime specification should be intentionally conservative.
+Runtime packages should exist as a platform capability in v1.
 
-Illustrative shape:
+The purpose of v1 packages is composition rather than ecosystem development.
 
-```yaml
-spec:
-  image:
+A Runtime should be able to reference a package and override selected behavior.
 
-  session:
-    persistent:
+Conceptually:
 
-  tools:
+Runtime
++ Package
++ Overrides
+=
+Resolved Runtime
 
-  prompt:
+Package catalogs, registries, discovery systems, and marketplaces are not required.
 
-  channels:
-```
-
-This is not necessarily the final API.
-
-It represents the level of complexity appropriate for validating the architecture.
+The extension point should exist even if the surrounding ecosystem does not.
 
 ---
 
@@ -120,17 +119,20 @@ A Runtime resource should result in a running Hermes runtime.
 The controller should:
 
 1. Resolve Runtime configuration.
-2. Provision required storage.
-3. Construct workload definitions.
-4. Launch runtime workloads.
-5. Maintain lifecycle.
-6. Recover from failures.
+2. Resolve package configuration.
+3. Resolve tools and integrations.
+4. Provision required storage.
+5. Construct workload definitions.
+6. Launch runtime workloads.
+7. Maintain lifecycle.
+8. Recover from failures.
+9. Preserve continuity.
 
 The runtime should perform cognitive work once launched.
 
 ---
 
-# Persistence
+# Persistence And Continuity
 
 Persistence is a required v1 capability.
 
@@ -142,55 +144,61 @@ Conceptually:
 
 The controller should provide durable storage and reattach that storage when workloads are recreated.
 
-The controller does not need to interpret persisted contents.
+Session reuse is a first-class capability.
 
-The goal is continuity rather than cognitive awareness of persistence.
+A Runtime should be capable of:
+
+- Creating sessions
+- Reusing sessions
+- Recovering sessions
+- Continuing operation after infrastructure replacement
 
 ---
 
 # Tool Model
 
-V1 should support local process tools.
+V1 should support multiple capability delivery mechanisms.
 
-Examples:
+Required capabilities include:
 
-- kubectl
-- shell utilities
-- custom scripts
+- Local process tools
+- MCP-based tools
 
-Hermes should be able to invoke these tools directly.
+Sidecar-delivered capabilities may be supported where operational requirements justify them.
 
-This model provides a large amount of practical capability with minimal architectural complexity.
-
-MCP-based tools and sidecar-delivered tools may be introduced later.
-
-They should not be required to validate the platform.
+Tool integration is a platform concern and should be available from the beginning.
 
 ---
 
 # Channel Model
 
-V1 should support a minimal interaction model.
+V1 should include a channel framework.
 
-The exact implementation remains open.
+The platform should support the concept of:
 
-Potential approaches include:
+- Input channels
+- Output channels
 
-- Standard input and output
-- Kubernetes resources
-- Webhooks
+The exact set of adapters may remain small.
 
-The objective is to demonstrate runtime interaction rather than establish a comprehensive communication framework.
+The abstraction itself is a core platform capability.
 
 ---
 
 # Availability
 
-V1 should prioritize correctness over sophistication.
+Availability is a required v1 capability.
 
-Single-instance runtime execution is sufficient.
+The platform should support runtime continuity during infrastructure failures.
 
-Leader election, active standby configurations, and advanced failover models should be deferred until runtime continuity has been validated.
+The exact implementation remains open, but the platform should include:
+
+- Runtime recovery
+- Continuity preservation
+- Leadership where required
+- Failover mechanisms where required
+
+Availability is part of the Runtime platform rather than a future enhancement.
 
 ---
 
@@ -200,45 +208,14 @@ The controller should expose observable runtime state.
 
 Examples include:
 
-```yaml
-status:
-  phase:
-  ready:
-  podRef:
-  session:
-```
+- Lifecycle phase
+- Health
+- Conditions
+- Runtime references
+- Continuity information
+- Session information
 
 Users should be able to understand runtime lifecycle directly from Kubernetes.
-
----
-
-# Example Runtime
-
-An illustrative v1 Runtime might resemble:
-
-```yaml
-apiVersion: collective.io/v1alpha1
-kind: Runtime
-metadata:
-  name: cluster-assistant
-
-spec:
-  image: ghcr.io/hermes/runtime
-
-  session:
-    persistent: true
-
-  tools:
-    - kubectl
-
-  prompt: |
-    You are a Kubernetes operational assistant.
-
-  channels:
-    - stdio
-```
-
-The controller should be capable of realizing this resource into a functioning Hermes runtime.
 
 ---
 
@@ -248,9 +225,14 @@ V1 can be considered complete when:
 
 - Runtime resources are declarative.
 - Hermes runtimes are controller-managed.
-- Session continuity survives pod replacement.
-- Runtime status is observable.
+- Persistent runtimes survive infrastructure replacement.
+- Session reuse works reliably.
+- Availability and recovery mechanisms function correctly.
 - Tool execution works reliably.
-- The architecture can be demonstrated through at least one practical operational assistant.
+- MCP integrations work reliably.
+- Channel abstractions function correctly.
+- Runtime status is observable.
+- Runtime packages can be composed into Runtime definitions.
+- Independent teams can build specialized assistants without modifying the platform.
 
-At that point, the project will have validated its central architectural thesis and can evolve toward richer runtime, package, channel, perception, and memory models.
+At that point, the Runtime platform is complete enough to support future work on packages, collectives, and richer cognitive ecosystems.
