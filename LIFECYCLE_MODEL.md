@@ -2,208 +2,159 @@
 
 ## Purpose
 
-This document defines the lifecycle relationship between a runtime resource, the controller, runtime processes, sessions, and continuity.
+This document defines the lifecycle relationship between Runtime resources, controllers, Kubernetes workloads, and Hermes runtimes.
 
-The objective is to establish a clear operational model before concrete CRD schemas and implementation details are finalized.
+The objective is to establish a stable operational model for runtime management.
 
 ---
 
 # Core Principle
 
-The runtime resource is the durable object.
+A Runtime is the durable managed entity.
 
-Pods, processes, leaders, replicas, and executions are implementation details used to realize the desired runtime.
+Pods, containers, services, storage volumes, and leaders are implementation artifacts used to realize that Runtime.
 
-A runtime should maintain continuity across infrastructure events whenever its configuration allows that continuity to be preserved.
+The controller preserves Runtime existence.
 
-The controller is therefore responsible for preserving runtime intent while the runtime process is responsible for cognition and execution.
+Hermes performs cognitive work.
 
 ---
 
-# Runtime Instantiation
+# Runtime Lifecycle
 
-A runtime resource represents a desired cognitive runtime.
+A Runtime represents desired operational state.
 
-When a runtime is created, the controller evaluates the specification and materializes the required Kubernetes resources.
+When a Runtime is created, the controller:
 
-The exact workload type is derived from runtime topology.
+- Resolves Runtime configuration
+- Resolves Tool references
+- Renders Hermes configuration
+- Constructs runtime filesystem layouts
+- Provisions storage
+- Creates workload resources
+- Establishes connectivity
+- Maintains lifecycle
 
-Examples may include:
-
-- Deployment
-- StatefulSet
-- DaemonSet
-- Job-like execution models
-
-The runtime resource remains the authoritative object.
-
-Workloads exist only to realize that runtime.
-
-The controller owns the mapping between runtime intent and workload implementation.
+The Runtime resource remains authoritative throughout its lifetime.
 
 ---
 
 # Runtime Identity
 
-Runtime identity is distinct from process identity.
+Runtime identity is independent from infrastructure identity.
 
-A runtime may exist for months.
+A Runtime may survive:
 
-Individual pods may exist for minutes.
+- Pod replacement
+- Container replacement
+- Node replacement
+- Controller restart
 
-A pod restart does not create a new runtime.
+The Runtime remains the same managed cognitive service.
 
-A leader transition does not create a new runtime.
+Infrastructure artifacts are replaceable.
 
-A controller restart does not create a new runtime.
-
-The runtime resource defines identity.
-
-All operational artifacts derive from that identity.
+Runtime identity is not.
 
 ---
 
 # Runtime Continuity
 
-Continuity determines whether cognition survives runtime infrastructure changes.
-
-Three conceptual modes currently exist.
+Continuity determines how runtime state survives lifecycle events.
 
 ## Ephemeral
 
-The runtime begins with no prior continuity.
+Runtime state is not reused.
 
-Restarting the runtime creates a new cognitive instance.
+Infrastructure replacement creates a fresh runtime instance.
 
-No previous session is reused.
-
-This mode is suitable for:
+Suitable for:
 
 - One-time tasks
-- Experiments
-- Temporary assistants
+- Temporary workloads
+- Experimental runtimes
 
 ---
 
 ## Persistent
 
-The runtime maintains durable continuity.
+Runtime state survives infrastructure replacement.
 
-Restarts preserve runtime history through persisted session state.
+The controller restores access to persisted runtime state.
 
-The runtime continues from its previously known state whenever recovery is possible.
+Suitable for:
 
-This mode is suitable for:
-
-- Maintainers
 - Long-lived assistants
-- Operational ownership scenarios
+- Operational maintainers
+- Service runtimes
 
 ---
 
-## Referenced
+## Existing
 
-The runtime attaches to an existing continuity source.
+A Runtime attaches to previously established runtime state.
 
-The source may have been created by another runtime instance.
+Suitable for:
 
-This enables:
-
+- Migration
+- Recovery
 - Runtime replacement
-- Runtime migration
-- Shared operational context
-- Recovery from infrastructure loss
+- Continuity transfer
 
-The exact reference model remains implementation-specific.
+The controller manages attachment.
 
----
-
-# Session Binding
-
-Sessions represent cognitive continuity.
-
-A runtime may create, own, or attach to sessions.
-
-The controller does not interpret session contents.
-
-The controller only manages lifecycle relationships.
-
-Conceptually:
-
-Runtime
-→ Session
-→ Memory
-
-The runtime reasons.
-
-The session preserves continuity.
-
-Memory preserves retained cognition.
-
-These concerns should remain distinct.
+Hermes manages the resulting cognitive continuity.
 
 ---
 
 # Controller Responsibilities
 
-The controller owns lifecycle.
+The controller owns operational lifecycle.
 
 Responsibilities include:
 
-- Configuration resolution
-- Runtime provisioning
-- Session attachment
-- Persistence wiring
-- Availability management
-- Runtime replacement
+- Runtime reconciliation
+- Tool resolution
+- Configuration rendering
+- Filesystem rendering
+- Workload provisioning
+- Persistence provisioning
+- Connectivity provisioning
+- Recovery
 - Health observation
-- Reconciliation
+- Availability management
 
 The controller should not participate in cognition.
 
-It should not:
-
-- Interpret observations
-- Execute reasoning
-- Make runtime decisions
-- Modify cognitive state
-
-The controller maintains runtime existence.
-
-The runtime performs cognitive work.
-
 ---
 
-# Runtime Responsibilities
+# Hermes Responsibilities
 
-The runtime owns cognition.
+Hermes owns cognitive execution.
 
 Responsibilities include:
 
-- Observation
 - Reasoning
-- Planning
 - Tool usage
-- Interaction
-- Session evolution
-- Memory creation
+- Session management
+- Memory management
+- Skill execution
+- Channel interaction
+- Agent behavior
 
-The runtime should not own infrastructure lifecycle.
-
-Lifecycle remains under controller authority.
+Hermes should not be responsible for infrastructure lifecycle.
 
 ---
 
-# Runtime State Machine
+# Runtime States
 
-A runtime progresses through observable lifecycle phases.
+A Runtime progresses through observable operational states.
 
-The exact names may evolve.
-
-The conceptual model is:
+Conceptually:
 
 Pending
-→ Bootstrapping
+→ Provisioning
+→ Starting
 → Running
 
 Running may transition to:
@@ -215,145 +166,122 @@ Running may transition to:
 
 ## Pending
 
-The runtime has been declared but infrastructure has not yet been prepared.
+The Runtime has been declared.
 
-## Bootstrapping
+No infrastructure has yet been realized.
 
-Required runtime resources are being created.
+## Provisioning
 
-Configuration is being resolved.
+Storage, configuration, tools, secrets, and connectivity are being prepared.
 
-Session attachment may occur during this phase.
+## Starting
+
+Workloads are launching and attaching required runtime resources.
 
 ## Running
 
-The runtime is healthy and capable of performing cognitive work.
+The Runtime is healthy and available.
 
 ## Recovering
 
-The runtime is attempting to restore desired continuity after disruption.
+The controller is restoring desired Runtime state.
 
 ## Degraded
 
-The runtime remains operational but continuity, availability, tooling, perception, or integrations are partially impaired.
+The Runtime remains available but some capabilities are impaired.
 
 ## Stopped
 
-The runtime has been intentionally halted.
+The Runtime has been intentionally halted.
 
 ## Failed
 
-The controller cannot currently realize desired runtime behavior.
+The controller cannot currently realize the Runtime.
 
 ---
 
 # Availability Model
 
-Availability concerns runtime existence rather than cognition.
+Availability concerns Runtime existence and service continuity.
 
-A runtime may be configured for:
+A Runtime should behave as a single cognitive identity.
 
-- Single-instance execution
-- High availability
-- Distributed placement
+Availability mechanisms exist to preserve that identity.
 
-The availability model should preserve a simple principle:
+Examples include:
 
-A runtime should behave as a single cognitive identity even when multiple infrastructure instances participate in preserving availability.
+- Workload recreation
+- Runtime recovery
+- Service restoration
+- Leadership transfer
 
-The user manages one runtime.
-
-The system manages the infrastructure required to keep that runtime available.
+Availability should not create multiple independent cognitive actors.
 
 ---
 
 # Leadership
 
-Certain availability configurations may require leadership.
+Some Runtime configurations may require leadership.
 
-Leadership exists to coordinate runtime execution.
+Leadership coordinates active execution.
 
-Leadership does not create multiple independent cognitive actors.
+At any point in time there should be a clearly defined active execution authority.
 
-At any point in time, there should be a clear authority responsible for active cognition and execution.
+Standby infrastructure may exist to support recovery and availability.
 
-Standby participants exist to preserve continuity and availability.
-
-They do not represent independent runtime identities.
+The Runtime remains a single managed entity.
 
 ---
 
-# Trigger Models
+# Service Runtimes
 
-Trigger models influence runtime lifecycle.
-
-## Reactive
-
-The runtime primarily responds to incoming events or interactions.
+Certain runtimes operate as continuously available services.
 
 Examples include:
 
-- Chat interactions
-- Webhooks
-- Operational events
+- MCP servers
+- Operational assistants
+- Persistent organizational runtimes
 
-Reactive runtimes may eventually support scale-to-zero patterns.
-
----
-
-## Scheduled
-
-The runtime executes according to defined schedules.
-
-Examples include:
-
-- Daily reviews
-- Periodic audits
-- Maintenance routines
-
-Scheduled runtimes may spend significant periods inactive.
+The platform should support recovery patterns that preserve service availability and runtime continuity.
 
 ---
 
-## Continuous
+# Failure Recovery
 
-The runtime remains continuously active.
+Infrastructure failure should not automatically imply Runtime loss.
 
-Examples include:
+When continuity is configured:
 
-- Cluster maintainers
-- Product maintainers
-- Environment supervisors
-
-Continuous runtimes are expected to maintain active continuity.
-
----
-
-# Continuity During Failure
-
-Infrastructure failure should not automatically imply cognitive loss.
-
-When continuity has been configured:
-
-- Sessions should remain recoverable
-- Memory should remain accessible
-- Leadership should be transferable
+- Runtime state should remain accessible
 - Runtime identity should remain stable
+- Service availability should be restorable
+- Runtime execution should be recoverable
 
-Recovery behavior should be deterministic and observable.
+The controller restores operation.
 
-The controller is responsible for restoring runtime operation.
-
-The runtime is responsible for resuming cognitive work.
+Hermes resumes cognitive work.
 
 ---
 
 # Architectural Constraint
 
-The lifecycle model should preserve a strict separation between runtime management and cognition.
+A strict boundary should be maintained.
 
-The controller manages existence.
+The controller manages:
 
-The runtime manages cognition.
+- Existence
+- Infrastructure
+- Lifecycle
+- Availability
+- Persistence
+
+Hermes manages:
+
+- Cognition
+- Memory
+- Sessions
+- Skills
+- Behavior
 
 This boundary should remain stable as the platform evolves.
