@@ -2,508 +2,250 @@
 
 ## Design Principle
 
-k8s-hermes-collective should expose a small and composable API surface.
+k8s-hermes-collective should expose a small, stable, and Kubernetes-native API.
 
-The system centers around a primary runtime resource that declares desired cognitive runtime behavior and lifecycle.
+The platform is a control plane for Hermes runtimes.
 
-Supporting resources may exist where reuse, independent evolution, or policy sharing provide architectural value.
+Its API should primarily describe:
 
-The objective is to preserve a simple user experience while avoiding oversized and tightly coupled resource definitions.
+- What cognitive service should exist
+- What capabilities should be available
+- How that service should be operated
 
-The architecture therefore follows:
-
-- One primary runtime resource
-- Optional supporting resources
-- Embedded-first configuration with optional references
-
-This provides an approachable default model while allowing composition and reuse where appropriate.
+The platform should avoid reproducing Hermes concepts as Kubernetes resources unless there is clear operational value.
 
 ---
 
 # API Topology
 
-The API surface is organized around a single primary runtime resource.
+The preferred v1 API surface is intentionally small.
 
-Supporting resources exist to provide reusable configuration and policy.
+## Runtime
 
-## Primary Resource
+The primary resource.
 
-The runtime resource is the native abstraction of the platform.
+Represents a managed cognitive service.
 
-The exact resource name remains open.
+## Tool
 
-Possible names include:
+A reusable capability integration.
 
-- Runtime
-- HermesRuntime
-- CognitiveRuntime
-- Collective
+Provides capabilities that may be consumed by multiple runtimes.
 
-For architectural discussion, this document uses:
-
-`Runtime`
-
-as a neutral placeholder.
-
-The runtime resource declares:
-
-> instantiate and maintain this cognitive runtime
-
-The runtime is the only required cognitive resource.
-
----
-
-## Supporting Resources
-
-Certain concerns are naturally reusable and should not necessarily be embedded repeatedly across runtime definitions.
-
-Potential supporting resources include:
-
-| Resource | Purpose |
-|---|---|
-| PerceptionPolicy | Attention and observation behavior |
-| ToolProfile | Capability bundles |
-| MemoryProfile | Memory and retention strategy |
-| InteractionProfile | Input, output, and trigger behavior |
-| RuntimeTemplate | Reusable runtime patterns |
-
-These resources are optional.
-
-A runtime may:
-
-- Embed configuration directly
-- Reference reusable resources
-- Mix both approaches
-
-This flexibility supports both simple and advanced deployment models.
+These two resources form the core platform model.
 
 ---
 
 # Runtime Resource
 
-The runtime resource defines desired runtime behavior.
+Runtime is the primary abstraction of the platform.
 
-Conceptually:
+A Runtime declares:
 
-Identity
-+ Environment
-+ Cognition
-+ Capabilities
-+ Interaction
-=
-Runtime Specification
+> create and operate this Hermes-based cognitive service.
+
+A Runtime is not:
+
+- A pod
+- A process
+- A profile
+- A volume
+
+A Runtime is the desired operational entity that the controller continuously reconciles.
 
 ---
 
-# Spec
+# Runtime Spec
 
-The runtime specification represents declarative intent.
+A Runtime specification should focus on operational intent.
 
-High-level structure:
+Illustrative structure:
 
 ```yaml
 spec:
-  identity
-  environment
-  cognition
-  capabilities
-  interaction
-```
-
----
-
-# Identity
-
-Identity describes semantic context.
-
-This layer is distinct from Kubernetes metadata.
-
-It describes what the runtime is intended to be and why it exists.
-
-Illustrative structure:
-
-```yaml
-identity:
-  purpose:
-  persona:
-  owner:
-  labels:
-  description:
-```
-
-Identity may describe:
-
-- Purpose
-- Behavioral identity
-- Ownership
-- Domain context
-- Descriptive semantics
-
-Examples:
-
-- Cluster maintainer
-- Incident investigator
-- Product assistant
-
-Identity provides runtime context without embedding operational behavior.
-
----
-
-# Environment
-
-Environment describes operational embodiment.
-
-This layer answers:
-
-> how should this runtime exist?
-
-Illustrative structure:
-
-```yaml
-environment:
   runtime:
-  placement:
+  persistence:
+  continuity:
   availability:
-  resources:
-  storage:
+  tools:
+  skills:
+  channels:
 ```
 
-This section is infrastructure-oriented and cognition-agnostic.
+Exact schemas may evolve.
 
-## Runtime
+The responsibility boundaries should remain stable.
 
-Defines execution engine configuration.
+---
 
-Illustrative structure:
+# Runtime Configuration
+
+This section controls how Hermes is configured and launched.
+
+Illustrative concerns include:
 
 ```yaml
 runtime:
-  implementation:
   image:
   version:
-  args:
+  configuration:
 ```
 
-This allows runtime evolution while preserving API stability.
+The controller renders configuration artifacts required by Hermes.
 
-The implementation may include Hermes CLI, Hermes-agent-derived runtimes, or future compatible engines.
-
-## Placement
-
-Defines scheduling and topology.
-
-Illustrative structure:
-
-```yaml
-placement:
-  mode:
-  nodeSelector:
-  affinity:
-  tolerations:
-```
-
-Potential placement modes include:
-
-- Deployment-style
-- Daemon-style
-- Singleton
-
-Placement governs runtime topology rather than cognition.
-
-## Availability
-
-Defines runtime durability.
-
-Illustrative structure:
-
-```yaml
-availability:
-  replicas:
-  leaderElection:
-  restartPolicy:
-```
-
-Availability describes how runtime existence is preserved.
-
-## Resources
-
-Defines conventional compute constraints.
-
-Illustrative structure:
-
-```yaml
-resources:
-  requests:
-  limits:
-```
-
-## Storage
-
-Defines operational persistence.
-
-Illustrative structure:
-
-```yaml
-storage:
-  workspace:
-  persistence:
-```
-
-Storage concerns operational continuity rather than cognitive memory.
+The platform should remain focused on Hermes configuration surfaces rather than Hermes internals.
 
 ---
 
-# Cognition
+# Persistence
 
-Cognition defines how the runtime thinks and preserves continuity.
+Persistence describes runtime durability requirements.
 
 Illustrative structure:
 
 ```yaml
-cognition:
-  session:
-  perception:
-  memory:
-  reasoning:
+persistence:
+  enabled:
+  storageClass:
+  size:
 ```
 
-This layer forms the cognitive center of the runtime.
+The platform preserves runtime state.
 
-## Session
+Hermes remains responsible for the contents of that state.
 
-Session defines continuity.
+---
+
+# Continuity
+
+Continuity describes how runtime state is reused.
 
 Illustrative structure:
 
 ```yaml
-session:
+continuity:
   mode:
-  reuse:
-  retention:
+  source:
 ```
 
 Potential modes include:
 
 - Ephemeral
 - Persistent
-- Referenced
+- Existing
 
-Referenced sessions enable continuity through explicit session reuse.
-
-Illustrative reuse model:
-
-```yaml
-reuse:
-  sessionRef:
-```
-
-Session concerns continuity of runtime identity and operation.
-
-## Perception
-
-Perception controls what enters cognition.
-
-Illustrative structure:
-
-```yaml
-perception:
-  policyRef:
-  adaptive:
-```
-
-Perception is expected to be policy-driven.
-
-Reusable policies enable:
-
-- Shared behavior
-- Experimentation
-- Consistent operational interpretation
-- Reuse across runtimes
-
-## Memory
-
-Memory concerns retained cognition.
-
-Illustrative structure:
-
-```yaml
-memory:
-  profileRef:
-  scope:
-```
-
-Potential scopes include:
-
-- Runtime-local
-- Namespace
-- Shared
-
-Memory is optional.
-
-Not all runtimes require retained cognition.
-
-## Reasoning
-
-Reasoning defines behavioral posture.
-
-Illustrative structure:
-
-```yaml
-reasoning:
-  autonomy:
-  safety:
-  planning:
-```
-
-Reasoning influences runtime behavior.
-
-Examples:
-
-- Advisory
-- Supervised
-- Autonomous
-
-Reasoning governs cognitive behavior rather than authority.
+This section governs runtime continuity rather than infrastructure persistence.
 
 ---
 
-# Capabilities
+# Availability
 
-Capabilities define action surface.
+Availability describes runtime resilience.
 
 Illustrative structure:
 
 ```yaml
-capabilities:
-  tools:
-  permissions:
-  policies:
+availability:
+  mode:
+  recovery:
 ```
 
-Capabilities answer:
+Examples include:
 
-> what may this runtime do?
+- Single runtime
+- Recoverable runtime
+- Service runtime with failover expectations
 
-## Tools
+The platform should preserve the concept of a single cognitive identity even when multiple infrastructure components participate in maintaining availability.
 
-Tools define available capabilities.
+---
+
+# Tools
+
+Runtimes consume reusable Tool resources.
 
 Illustrative structure:
 
 ```yaml
 tools:
-  refs:
+  - github
+  - jira
+  - cluster-api
 ```
 
-Tool profiles support reuse and small runtime specifications.
+Tools should be reference-based.
 
-## Permissions
-
-Permissions define authority.
-
-Capability and authority are intentionally separate.
-
-A runtime may possess a tool while remaining restricted in how that tool may be used.
-
-Illustrative structure:
-
-```yaml
-permissions:
-  profiles:
-```
-
-Permissions may later integrate with runtime policy, execution boundaries, and Kubernetes authorization models.
-
-## Policies
-
-Policies define execution guardrails.
-
-Illustrative structure:
-
-```yaml
-policies:
-  approval:
-  escalation:
-  restrictions:
-```
-
-Policies govern execution behavior rather than capability availability.
+This creates reusable ownership boundaries and avoids repeated capability definitions.
 
 ---
 
-# Interaction
+# Skills
 
-Interaction defines communication and activation behavior.
+Skills are delivered to Hermes.
+
+The platform should treat skills primarily as deployable runtime assets.
 
 Illustrative structure:
 
 ```yaml
-interaction:
-  triggers:
+skills:
+  - incident-response
+  - cluster-analysis
+```
+
+The controller is responsible for delivery.
+
+Hermes is responsible for skill behavior.
+
+---
+
+# Channels
+
+Channels describe how information enters and leaves a runtime.
+
+Illustrative structure:
+
+```yaml
+channels:
   inputs:
   outputs:
 ```
 
-Interaction is broader than transport or messaging.
-
-It describes how cognition enters and leaves the runtime.
-
-## Triggers
-
-Triggers define runtime activation behavior.
-
-Illustrative structure:
-
-```yaml
-triggers:
-  mode:
-```
-
-Potential modes include:
-
-- Reactive
-- Scheduled
-- Continuous
-
-Trigger behavior significantly influences runtime lifecycle.
-
-## Inputs
-
-Inputs define ingress.
-
-Illustrative structure:
-
-```yaml
-inputs:
-  refs:
-```
-
-Potential examples include:
+Examples include:
 
 - Chat systems
 - Webhooks
+- Ticket systems
 - Event streams
-- Tickets
-- Operational systems
+- MCP services
 
-## Outputs
+The platform concern is delivery and configuration.
 
-Outputs define egress.
+---
+
+# Tool Resource
+
+Tool is the primary reusable resource.
+
+A Tool represents a capability integration.
 
 Illustrative structure:
 
 ```yaml
-outputs:
-  refs:
+kind: Tool
+
+spec:
+  type:
 ```
 
-Potential examples include:
+Potential implementations include:
 
-- Chat
-- Alerts
-- Ticket updates
-- Webhooks
-- Structured operational responses
+- MCP integrations
+- External service integrations
+- Sidecar-delivered capabilities
+- Operational capability providers
+
+The exact implementation should remain hidden behind a stable Tool abstraction.
 
 ---
 
@@ -511,82 +253,29 @@ Potential examples include:
 
 Status is controller-owned.
 
-It describes observed runtime reality.
+Status should communicate:
 
-Illustrative structure:
+- Lifecycle state
+- Health
+- Conditions
+- Availability state
+- Runtime references
+- Continuity information
 
-```yaml
-status:
-  lifecycle:
-  runtime:
-  continuity:
-```
+Status should describe operational reality.
 
-Status answers:
-
-> what is happening now?
-
-It does not expose cognition contents.
-
-## Lifecycle
-
-Operational state.
-
-Illustrative structure:
-
-```yaml
-lifecycle:
-  phase:
-  ready:
-  conditions:
-```
-
-This follows conventional Kubernetes patterns.
-
-## Runtime
-
-Observed runtime state.
-
-Illustrative structure:
-
-```yaml
-runtime:
-  podRefs:
-  leader:
-  version:
-```
-
-This reflects observed operational reality.
-
-## Continuity
-
-Continuity describes runtime-level cognitive state without exposing cognition itself.
-
-Illustrative structure:
-
-```yaml
-continuity:
-  sessionId:
-  memoryRef:
-  lastActivity:
-```
-
-This preserves separation between runtime lifecycle and runtime knowledge.
+It should not expose runtime cognition.
 
 ---
 
 # Configuration Philosophy
 
-The platform follows an embedded-first configuration model with optional references.
+The API should remain:
 
-Simple runtimes should be easy to author directly.
+- Runtime-centric
+- Operationally focused
+- Hermes-aligned
+- Declarative
+- Small in surface area
 
-Reusable policy and profile resources should remain available where shared configuration provides value.
-
-The preferred progression is:
-
-1. Embedded configuration by default
-2. Reusable references where composition becomes useful
-3. Mixed models where operational flexibility requires both
-
-This approach balances usability and long-term composability.
+The platform should favor reusable resources where ownership boundaries are valuable and embedded configuration where simplicity is more important.
