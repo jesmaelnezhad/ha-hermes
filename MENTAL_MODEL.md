@@ -2,204 +2,227 @@
 
 ## What k8s-hermes-collective Is
 
-k8s-hermes-collective is a Kubernetes-native system for managing Hermes-based cognitive runtimes through declarative resources.
+k8s-hermes-collective is a Kubernetes-native control plane for Hermes runtimes.
 
-At its core, the system introduces one or more Kubernetes Custom Resource Definitions (CRDs) and controllers that reconcile those resources into running Hermes-compatible processes.
+The system introduces Kubernetes resources and controllers that allow Hermes runtimes to be declared, provisioned, operated, recovered, observed, and evolved using Kubernetes patterns.
 
-The purpose of the system is not to implement cognition itself, nor to replace Kubernetes primitives. Instead, it provides a declarative lifecycle and operational model for cognitive runtimes.
+Hermes remains responsible for cognition, memory management, sessions, skills, tool usage, channel behavior, and agent execution.
 
-A user describes a desired cognitive process declaratively. The controller interprets that declaration, provisions the required runtime environment, maintains lifecycle and continuity, and ensures the desired runtime remains operational.
+k8s-hermes-collective remains responsible for lifecycle management, availability, persistence, integration delivery, workload realization, networking, and observability.
 
-Hermes serves as enabling runtime technology. k8s-hermes-collective is the orchestration and operational layer around that runtime.
+The project should leverage Hermes rather than reimplement it.
 
-## Core Architectural Shape
+---
 
-The architecture is organized around three layers.
+## Architectural Layers
 
 ### Kubernetes
 
-Kubernetes remains the authoritative orchestration substrate.
+Kubernetes remains the foundational orchestration substrate.
 
 It provides:
 
 - Scheduling
-- Reconciliation
+- Storage
 - Networking
-- Storage primitives
-- High availability mechanisms
-- Runtime execution infrastructure
+- Service discovery
+- Reconciliation
+- Security primitives
+- High availability primitives
 
-k8s-hermes-collective builds on these capabilities rather than replacing or duplicating them.
+k8s-hermes-collective builds on these capabilities.
 
-### k8s-hermes-collective Controller
+### k8s-hermes-collective
 
-The controller is the primary system component.
-
-It watches cognitive runtime resources and reconciles them into operational Hermes processes.
+The controller layer is responsible for translating declarative runtime specifications into operational Hermes deployments.
 
 Responsibilities include:
 
 - Runtime lifecycle management
-- Process bootstrapping
-- Configuration resolution
-- Session continuity and reuse
-- Persistence coordination
-- High-availability behavior
-- Failure recovery
-- Tool and integration wiring
-- Input and output channel setup
+- Runtime reconciliation
+- Configuration rendering
+- Filesystem layout rendering
+- Storage provisioning
+- Availability management
+- Recovery and failover
+- Tool delivery
+- Connectivity delivery
+- Status reporting
 
-The controller is responsible for maintaining declared cognitive runtime state.
+The controller operates Hermes. It does not become Hermes.
 
-### Hermes Runtime Process
+### Hermes
 
-The runtime process performs cognition.
+Hermes is the cognitive runtime.
 
-This process is expected to be Hermes CLI or a Hermes-Agent-derived runtime designed for operational execution.
+Hermes is treated as a complete system that can operate when provided with:
 
-The runtime may:
+- A home directory
+- Configuration
+- Tools
+- Skills
+- Channels
+- Runtime resources
 
-- Perform tasks
-- Maintain systems
-- Assist users
-- Observe environments
-- Use tools
-- Maintain sessions
-- Interact through configured channels
+Hermes performs cognitive work.
 
-k8s-hermes-collective manages the runtime. The runtime performs cognitive work.
+---
 
-## Primary Abstraction
+## Primary Platform Resource
 
-The native abstraction of the system is the cognitive runtime resource.
+The primary platform abstraction is Runtime.
 
-The exact CRD name remains open.
+A Runtime represents a managed cognitive service.
 
-Possible names include:
+A Runtime is not merely:
 
-- HermesRuntime
-- CognitiveRuntime
-- Collective
-- Other names aligned with project vocabulary
+- A pod
+- A process
+- A profile
+- A storage volume
 
-Regardless of naming, the architectural principle is stable:
+A Runtime is the complete operational entity that combines:
 
-The system should expose a small number of native primitives.
+- Identity
+- Configuration
+- Memory
+- Sessions
+- Execution
+- Lifecycle
+- Availability requirements
 
-Behavioral patterns and operational personalities are configurations of those primitives rather than independent platform types.
+The controller continuously reconciles this entity into running infrastructure.
 
-## Cognitive Runtime Resource
+---
 
-A runtime resource describes enough information for the controller to create and maintain a Hermes-compatible process.
+## Runtime Model
 
-The resource may describe:
+A Runtime describes the desired state of a Hermes-based cognitive service.
 
-### Runtime
+Typical concerns include:
 
-How the runtime is launched and operated.
+### Runtime Configuration
 
-Potential concerns:
+How Hermes should be configured and operated.
 
-- Image
-- Runtime implementation
-- Command and startup mode
-- Resource limits
-- Execution environment
-- Placement
+### Persistence
 
-### Session
+What state should survive infrastructure replacement.
 
-Session lifecycle and continuity.
+### Continuity
 
-Potential concerns:
+How existing sessions and runtime state are reused.
 
-- Persistent sessions
-- Session reuse
-- Existing session references
-- Continuity guarantees
-- Session ownership
+### Availability
 
-### Perception
-
-Observation and attention behavior.
-
-Potential concerns:
-
-- Existing perception policy reuse
-- Bootstrap policies
-- Adaptive perception enablement
-- Policy references
+How the runtime should recover from failures.
 
 ### Tools
 
-Capability surface available to the runtime.
+Which capabilities should be available to the runtime.
 
-Potential concerns:
+### Skills
 
-- Tool selection
-- Tool configuration
-- Permission boundaries
-- Runtime capability profiles
+Which skill bundles should be delivered to the runtime.
 
 ### Channels
 
-How the runtime receives and produces information.
+How information enters and leaves the runtime.
 
-Potential concerns:
+### Connectivity
 
-- User interaction
-- Event ingestion
-- Messaging systems
-- Slack or chat interfaces
-- Webhooks
-- Ticketing or operational systems
-- Structured output destinations
+How external systems become available to the runtime.
 
-### Availability and Continuity
+The Runtime resource should remain flexible enough to support interactive assistants, autonomous services, operational agents, maintenance workloads, and future runtime patterns.
 
-Operational durability of the runtime.
+---
 
-Potential concerns:
+## Tool Resource
 
-- Replication
-- Failover
-- Leadership
-- Persistence
-- Restart behavior
-- Recovery policy
+Tools are reusable capability integrations.
 
-These categories are illustrative rather than exhaustive.
+A Tool may represent:
 
-The resource should remain flexible enough to support cognitive runtimes with very different operational purposes.
+- An MCP integration
+- A sidecar-delivered capability
+- An external service integration
+- An operational capability exposed to Hermes
 
-## Use Cases as Configurations
+Tools create a reusable ownership boundary.
 
-Operational identities such as node maintainers or cluster maintainers are not native architectural types.
+Runtime operators consume tools.
 
-They are packaged or reusable configurations built on top of the runtime abstraction.
+Tool owners maintain tools.
 
-Examples may include:
+---
 
-- Node maintainer
-- Cluster maintainer
-- Product maintainer
-- Support assistant
-- Incident investigator
-- Environment-specific operators
+## Runtime Realization
 
-These are examples that demonstrate the power of the runtime model rather than architectural primitives themselves.
+Conceptually the controller performs the following work:
 
-The architecture should avoid embedding these use cases as first-class ontology unless strong technical constraints justify doing so.
+Runtime
+→ Resolve tool references
+→ Render Hermes configuration
+→ Render filesystem layout
+→ Provision storage
+→ Create Kubernetes workloads
+→ Expose required connectivity
+→ Maintain runtime lifecycle
+
+The primary outputs of reconciliation are:
+
+- Hermes configuration artifacts
+- Runtime filesystem structure
+- Kubernetes workload resources
+- Connectivity resources
+
+---
+
+## Availability Model
+
+Runtime availability is achieved through recovery and continuity rather than shared-active cognition.
+
+A runtime may expose services, gateways, APIs, or MCP endpoints.
+
+When infrastructure fails, the controller should be able to:
+
+- Recover workloads
+- Reattach runtime state
+- Restore service availability
+- Preserve runtime continuity
+
+Availability is a core platform concern.
+
+---
+
+## Solutions Built On The Platform
+
+Operational personalities are not native platform concepts.
+
+Examples include:
+
+- Warden
+- Steward
+- Cluster Maintainer
+- Product Maintainer
+- Support Assistant
+
+These are solutions built on top of the platform.
+
+The platform should provide primitives that allow these solutions to be assembled without modifying the control plane itself.
+
+---
 
 ## Design Direction
 
 The system should remain:
 
 - Kubernetes-native
+- Hermes-aligned
 - Declarative
-- Minimal in native concepts
 - Runtime-oriented
-- Flexible in configuration
-- Compatible with multiple operational personalities and execution models
+- Operationally focused
+- Minimal in native abstractions
+- Extensible through configuration and integrations
 
-The emphasis is on providing a durable and extensible runtime abstraction rather than defining a fixed taxonomy of cognitive roles.
+The emphasis is on operating Hermes runtimes well rather than creating a parallel agent framework.
