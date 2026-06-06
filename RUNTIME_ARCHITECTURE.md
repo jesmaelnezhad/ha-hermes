@@ -2,64 +2,101 @@
 
 ## Purpose
 
-This document describes how a Runtime resource is realized as a running cognitive workload.
+This document describes how Runtime resources are realized as operational Hermes runtimes.
 
-It defines the relationship between:
+It defines the architectural boundary between:
 
+- Kubernetes
 - k8s-hermes-collective
 - Hermes
-- Kubernetes workloads
-- Sessions
-- Tools
-- Channels
-- Runtime packages
 
-The goal is to establish a practical implementation model while preserving flexibility for future evolution.
+and explains how runtimes, tools, persistence, connectivity, and workloads fit together.
 
 ---
 
 # Architectural Principle
 
-Hermes is the cognitive engine.
+Hermes is the runtime system.
 
-k8s-hermes-collective is the lifecycle and orchestration system.
+k8s-hermes-collective is the Kubernetes control plane.
 
-Hermes is responsible for cognition.
+The platform should operate Hermes rather than reimplement it.
 
-k8s-hermes-collective is responsible for creating, configuring, maintaining, recovering, and integrating Hermes runtimes within Kubernetes.
+Responsibilities are separated as follows.
 
-Kubernetes remains responsible for workload execution and reconciliation.
+## Kubernetes
 
-The relationship can be viewed as:
+Provides:
 
-Kubernetes
-→ executes workloads
+- Scheduling
+- Storage
+- Networking
+- Service discovery
+- Workload execution
 
-k8s-hermes-collective
-→ manages cognitive runtimes
+## k8s-hermes-collective
 
-Hermes
-→ performs cognitive work
+Provides:
+
+- Runtime reconciliation
+- Configuration rendering
+- Filesystem rendering
+- Workload realization
+- Persistence management
+- Availability management
+- Connectivity management
+- Tool delivery
+- Observability
+
+## Hermes
+
+Provides:
+
+- Cognition
+- Sessions
+- Memory
+- Skills
+- Tool usage
+- Agent execution
+- Channel behavior
 
 ---
 
 # Runtime Realization
 
-A Runtime resource does not directly represent a pod.
-
-Instead, the controller resolves a Runtime resource into an execution environment.
+A Runtime resource is transformed into an operational Hermes deployment.
 
 Conceptually:
 
 Runtime
-→ Controller
-→ Runtime Definition
-→ Workload
-→ Running Cognitive Runtime
+→ Resolve Tools
+→ Render Hermes Configuration
+→ Render Runtime Filesystem
+→ Provision Storage
+→ Create Kubernetes Workloads
+→ Establish Connectivity
+→ Launch Hermes
+→ Maintain Lifecycle
 
-The controller owns this transformation.
+The controller owns this realization process.
 
-The Runtime resource remains the authoritative declaration.
+---
+
+# Runtime Filesystem
+
+A Runtime is expected to operate around a Hermes home directory and related runtime assets.
+
+The controller is responsible for constructing and delivering the required runtime filesystem.
+
+This may include:
+
+- Hermes configuration
+- Skills
+- Tool configuration
+- Runtime assets
+- Persistent runtime state
+
+The platform should depend on Hermes configuration interfaces rather than Hermes internal implementation details.
 
 ---
 
@@ -67,288 +104,219 @@ The Runtime resource remains the authoritative declaration.
 
 The fundamental execution unit is a runtime pod.
 
-The runtime pod contains a Hermes runtime and any supporting components required by the runtime configuration.
-
-A conceptual layout is:
+A conceptual layout may be:
 
 Pod
 ├─ Hermes Runtime
-├─ Tool Sidecar (optional)
-├─ Tool Sidecar (optional)
-├─ MCP Sidecar (optional)
-└─ Persistence Mounts
+├─ Capability Sidecar (optional)
+├─ Capability Sidecar (optional)
+└─ Runtime Storage Mounts
 
-The Hermes Runtime container is the only mandatory component.
+The Hermes Runtime container is the primary execution component.
 
-Additional containers may be added when required by tools, integrations, or operational constraints.
-
-The exact pod composition is derived from Runtime configuration.
+Additional containers are introduced only when required by integrations or capability delivery mechanisms.
 
 ---
 
 # Hermes Runtime Container
 
-The Hermes Runtime container hosts the cognitive engine.
-
-Responsibilities include:
-
-- Session usage
-- Reasoning
-- Tool invocation
-- Memory access
-- Interaction handling
-- Channel consumption
-- Channel production
-
-The runtime container should remain generic.
-
-Behavior should be determined primarily through configuration rather than custom images.
+The Hermes container hosts the cognitive runtime.
 
 The preferred model is:
 
-Hermes Runtime
-+ Runtime Configuration
+Hermes
++ Configuration
++ Skills
 + Tools
 + Channels
 =
-Behavior
+Runtime Behavior
 
-This allows a single runtime implementation to support many operational use cases.
-
----
-
-# Hermes Responsibilities
-
-Hermes provides cognitive capabilities.
-
-Expected responsibilities include:
-
-- LLM integration
-- Agent execution
-- Session management
-- Memory interfaces
-- Tool invocation
-- Reasoning loops
-- Interaction loops
-- MCP integration
-
-Hermes is treated as an execution engine rather than a platform orchestration layer.
+Behavior should primarily emerge from configuration rather than custom runtime images.
 
 ---
 
-# k8s-hermes-collective Responsibilities
+# Controller Responsibilities
 
-k8s-hermes-collective owns runtime lifecycle.
+The controller owns operational concerns.
 
 Responsibilities include:
 
-- CRDs
-- Controllers
 - Runtime reconciliation
+- Tool resolution
+- Configuration rendering
+- Filesystem assembly
 - Workload provisioning
-- Session attachment
-- Persistence coordination
-- Tool wiring
-- Channel wiring
-- Availability management
-- Runtime recovery
-- Kubernetes integration
-- Runtime observability
+- Persistence provisioning
+- Connectivity provisioning
+- Recovery
+- Availability
+- Observability
 
-The platform should avoid reimplementing cognitive concerns already provided by Hermes.
+The controller should not participate in cognition.
 
 ---
 
-# Session Persistence
+# Persistence Architecture
 
-The initial persistence model should remain simple.
+Persistence is delivered through Kubernetes storage.
 
-Hermes runtime state is persisted through a durable runtime directory.
+The controller provides durable runtime storage.
 
-Conceptually:
+Hermes uses that storage to preserve runtime state.
 
-/hermes/.hermes
+The controller does not interpret runtime state.
 
-This directory is backed by persistent storage.
+The controller ensures:
 
-Potential backends include:
+- State durability
+- State accessibility
+- State continuity across recovery
 
-- PersistentVolumeClaims
-- Ceph
-- EFS
-- NFS
-- Other Kubernetes storage providers
-
-The controller does not need to understand session contents.
-
-Its responsibility is to ensure that a runtime can access the same persisted state after restart or migration.
-
-This preserves continuity while maintaining separation between lifecycle management and cognition.
+This separation preserves a clean operational boundary.
 
 ---
 
 # Tool Architecture
 
-The platform should support multiple tool delivery models.
+Tools are reusable capability integrations.
 
-No single mechanism is expected to satisfy all use cases.
-
-## Local Process Tools
-
-The simplest model.
-
-Tools are available as executable processes within the runtime environment.
-
-Examples:
-
-- kubectl
-- terraform
-- custom scripts
-- operational utilities
-
-Hermes invokes these tools as subprocesses.
-
-This model is expected to provide a strong and practical foundation for early versions.
-
-## MCP Tools
-
-Tools may be provided through MCP servers.
-
-Runtime configuration references MCP endpoints or MCP resources.
-
-The controller resolves configuration and makes the MCP capability available to the runtime.
-
-This model enables:
-
-- Remote capabilities
-- Shared integrations
-- External systems
-- Capability reuse
-
-## Sidecar Tools
-
-Certain capabilities may be packaged as dedicated containers.
+A Tool resource may be realized through multiple implementation strategies.
 
 Examples include:
 
-- Proprietary SDKs
-- Licensed software
-- Heavy integrations
-- Long-running service adapters
+## MCP Integration
 
-Hermes communicates with these components through well-defined interfaces such as MCP, HTTP, or gRPC.
+The Tool references an MCP capability.
 
-This allows capabilities to evolve independently from the runtime image.
+The controller delivers required configuration and connectivity.
+
+## External Service Integration
+
+The Tool exposes an external service to runtimes.
+
+Examples include:
+
+- GitHub
+- Jira
+- Internal APIs
+- Monitoring systems
+
+## Sidecar Capability
+
+A Tool may require dedicated runtime components.
+
+These components may be delivered as sidecars or supporting services.
+
+The Runtime consumes a capability.
+
+The implementation remains hidden behind the Tool abstraction.
+
+---
+
+# Skill Delivery
+
+Skills are runtime assets delivered to Hermes.
+
+The platform should treat skills as deployable content rather than cognitive concepts.
+
+The controller is responsible for making skills available.
+
+Hermes is responsible for interpreting and executing them.
 
 ---
 
 # Channel Architecture
 
-Channels provide communication between runtimes and external systems.
+Channels describe how information enters and leaves a Runtime.
 
-The architecture should separate communication semantics from specific products.
-
-The runtime should think in terms of inputs and outputs rather than Slack, Jira, or other individual systems.
-
-## Input Channels
-
-Input channels introduce information into the runtime.
+The platform concern is configuration and delivery.
 
 Examples include:
 
 - Chat systems
+- Ticket systems
 - Webhooks
 - Event streams
-- Ticket systems
-- Messaging platforms
+- Operational integrations
 
-Input channels are transformed into runtime events.
+The controller provides connectivity.
 
-## Output Channels
+Hermes performs interaction.
 
-Output channels deliver runtime responses.
+---
+
+# Connectivity Architecture
+
+Connectivity is a first-class platform concern.
 
 Examples include:
 
-- Chat responses
-- Alerts
-- Ticket updates
-- Webhooks
-- Structured operational messages
+- MCP endpoints
+- Services
+- Ingress resources
+- External APIs
+- Internal platform integrations
 
-Output channels transport runtime intent to external systems.
+The controller should establish and maintain required connectivity.
 
-## Channel Adapters
+---
 
-Channel-specific logic should be isolated in adapters.
+# Availability Architecture
 
-Conceptually:
+Availability concerns runtime continuity and service restoration.
+
+The preferred model is:
 
 Runtime
-↔ Channel Adapter
-↔ External System
+→ Persistent State
+→ Recoverable Execution
 
-This preserves runtime portability and reduces platform coupling.
+When infrastructure fails:
 
----
+- Runtime state remains available
+- Workloads are recreated
+- Connectivity is restored
+- Runtime continuity is preserved when configured
 
-# Controller Launch Model
-
-The controller does not launch agents directly.
-
-Instead, the controller launches execution environments capable of hosting Hermes runtimes.
-
-Controller workflow:
-
-1. Resolve Runtime configuration
-2. Resolve referenced profiles and resources
-3. Resolve tools and channels
-4. Provision storage and secrets
-5. Construct workload definition
-6. Launch workload
-7. Maintain lifecycle and continuity
-
-The runtime process is responsible for cognition once execution begins.
+Availability should preserve a single Runtime identity.
 
 ---
 
-# Runtime Packages
+# Solution Layer
 
-Operational patterns should not become native platform types.
+The platform provides primitives.
 
-Instead, reusable configurations should be represented as runtime packages.
+Examples of solutions include:
 
-A runtime package describes a reusable operational personality.
-
-Examples:
-
+- Warden
+- Steward
 - Cluster Maintainer
-- Node Maintainer
 - Product Maintainer
-- Incident Investigator
-- Support Assistant
 
-A package may define:
+These are not native platform resources.
 
-- Prompts
-- Perception policies
-- Tool selections
-- Interaction defaults
-- Runtime defaults
-- Operational guidance
+They are compositions built on top of Runtime and Tool resources.
 
-A Runtime resource may reference a package and extend or override selected behavior.
+Such solutions may eventually be distributed through:
 
-This approach preserves a small platform ontology while enabling rich operational specialization.
+- Helm charts
+- Manifests
+- Repositories
+- Other packaging mechanisms
+
+The platform should enable these solutions without requiring new control-plane concepts.
 
 ---
 
 # Architectural Direction
 
-The preferred direction is to keep the platform focused on runtime lifecycle and integration.
+The platform should remain:
 
-Cognition should remain primarily within Hermes.
+- Runtime-centric
+- Hermes-aligned
+- Kubernetes-native
+- Operationally focused
+- Small in native abstractions
 
-Operational specialization should emerge through configuration, packages, tools, channels, and policies rather than through growth in the number of native resource types.
-
-This keeps the platform understandable, extensible, and aligned with Kubernetes design principles.
+The long-term objective is a control plane that reliably operates Hermes runtimes while remaining largely independent from Hermes implementation details.
